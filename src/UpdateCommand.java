@@ -19,8 +19,9 @@ public class UpdateCommand implements Command {
             index = Integer.parseInt(parameters[0]);
         } catch (Exception e) {
             System.out.println("Error! Invalid input! Index value not valid integer number");
+            return;
         }
-        if (index < 0) {
+        if (index < 1) {
             System.out.println("Error! Invalid input! Index value must be positive number");
             return;
         }
@@ -29,10 +30,12 @@ public class UpdateCommand implements Command {
             System.out.println("Error! Invalid input! Index value exceed stored data count");
             return;
         }
-        //check email
-        var data = parameters[1] + " " + parameters[2] + " " + parameters[3];
+        if (!MasterFunction.checkIsValidEmail(parameters[3])) {
+            System.out.println("Error! Invalid input! Email address is not valid");
+            return;
+        }
+        var data = MasterFunction.toTitleCase(parameters[1]) + " " + MasterFunction.toTitleCase(parameters[2]) + " " + MasterFunction.toTitleCase(parameters[3]);
         int toUpdatePosition = index - 1;
-        receiver.dataStore.set(toUpdatePosition, data);
-        receiver.commandStack.set(toUpdatePosition, this);
+        receiver.updateCommand(toUpdatePosition, this, data);
     }
 }
