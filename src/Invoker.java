@@ -1,11 +1,15 @@
+import java.util.Stack;
+
 public class Invoker {
-    private Command command;
+    private Command[] cmdToExecute;
 
-    public void setCommand(Command command) {
-
+    public void setCommandsForExecution(Command[] commands) {
+        cmdToExecute = commands;
     }
 
-    public void executeCommand() {
-
+    public void executeCommand(Stack<Command> history) {
+        for (var command : history) {
+            command.execute();
+        }
     }
 }
