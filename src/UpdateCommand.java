@@ -1,41 +1,75 @@
 public class UpdateCommand implements Command {
     private Receiver receiver;
-    private String params;
+    protected String index;
+    protected String data1;
+    protected String data2;
+    protected String data3;
+    protected int dataStoredPosition;
+    private int dataStoredUUID;
 
-    public UpdateCommand(Receiver receiver, String params) {
+    public UpdateCommand(Receiver receiver, String index, String data1) {
         this.receiver = receiver;
-        this.params = params;
+        this.index = index;
+        this.data1 = data1;
+    }
+
+    public UpdateCommand(Receiver receiver, String index, String data1, String data2) {
+        this.receiver = receiver;
+        this.index = index;
+        this.data1 = data1;
+        this.data2 = data2;
+    }
+
+    public UpdateCommand(Receiver receiver, String index, String data1, String data2, String data3) {
+        this.receiver = receiver;
+        this.index = index;
+        this.data1 = data1;
+        this.data2 = data2;
+        this.data3 = data3;
     }
 
     @Override
-    public void execute() {
-        var parameters = params.split(" ");
-        if (parameters.length != 4) {
-            System.out.println("Error! Invalid input! Update command need 4 parameters");
-            return;
-        }
-        int index = -1;
+    public String[] getData() {
+        return new String[]{index, data1, data2, data3};
+    }
+
+    @Override
+    public int getDataStoredPosition() {
+        return dataStoredPosition;
+    }
+
+    @Override
+    public int getDataStoredUUID() {
+        return dataStoredUUID;
+    }
+
+    @Override
+    public String getCommandName() {
+        return "Update";
+    }
+
+    @Override
+    public void execute() throws CustomException {
+        int idx = -1;
         try {
-            index = Integer.parseInt(parameters[0]);
-        } catch (Exception e) {
-            System.out.println("Error! Invalid input! Index value not valid integer number");
-            return;
+            idx = Integer.parseInt(index);
+        } catch (NumberFormatException | NullPointerException e) {
+            throw new CustomException("Error! Invalid input! Index value not valid integer number");
         }
-        if (index < 1) {
-            System.out.println("Error! Invalid input! Index value must be positive number");
-            return;
+        if (idx < 1) {
+            throw new CustomException("Error! Invalid input! Index value must be positive number");
         }
         var count = receiver.dataStore.size();
-        if (count < index) {
-            System.out.println("Error! Invalid input! Index value exceed stored data count");
-            return;
+        if (count < idx) {
+            throw new CustomException("Error! Invalid input! Index value exceed stored data count");
         }
-        if (!MasterFunction.checkIsValidEmail(parameters[3])) {
-            System.out.println("Error! Invalid input! Email address is not valid");
-            return;
+        if (data1 == null) {
+            throw new CustomException("Error! Invalid input! Data1 cannot be empty or null");
         }
-        var data = MasterFunction.toTitleCase(parameters[1]) + " " + MasterFunction.toTitleCase(parameters[2]) + " " + MasterFunction.toTitleCase(parameters[3]);
-        int toUpdatePosition = index - 1;
-        receiver.updateCommand(toUpdatePosition, this, data);
+        dataStoredPosition = idx - 1;
+        if (!MasterFunction.checkIsValidEmail(data3)) {
+            throw new CustomException("Error! Invalid input! Email address is not valid");
+        }
+        dataStoredUUID = receiver.updateCommand(this, true);
     }
 }

@@ -8,8 +8,19 @@ public class Invoker {
     }
 
     public void executeCommand(Stack<Command> history) {
-        for (var command : history) {
-            command.execute();
+        if (cmdToExecute == null) {
+            System.out.println("No cmd to execute");
         }
+        for (var command : cmdToExecute) {
+            try {
+                command.execute();
+                history.push(command);
+            }
+            catch (CustomException e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+        cmdToExecute = null;
     }
 }

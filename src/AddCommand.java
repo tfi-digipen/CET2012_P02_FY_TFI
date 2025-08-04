@@ -1,24 +1,58 @@
 public class AddCommand implements Command {
     private Receiver receiver;
-    private String params;
+    protected String data1;
+    protected String data2;
+    protected String data3;
+    private int dataStoredPosition;
+    private int dataStoredUUID;
 
-    public AddCommand(Receiver receiver, String params) {
+    public AddCommand(Receiver receiver, String data1, String data2, String data3) {
         this.receiver = receiver;
-        this.params = params;
+        this.data1 = data1;
+        this.data2 = data2;
+        this.data3 = data3;
     }
 
     @Override
-    public void execute() {
-        var parameters = params.split(" ");
-        if (parameters.length != 3) {
-            System.out.println("Error! Invalid input! Add command need 3 parameters");
-            return;
+    public String[] getData() {
+        return new String[]{data1, data2, data3};
+    }
+
+    @Override
+    public int getDataStoredPosition() {
+        return dataStoredPosition;
+    }
+
+    @Override
+    public int getDataStoredUUID() {
+        return dataStoredUUID;
+    }
+
+    @Override
+    public String getCommandName() {
+        return "Add";
+    }
+
+    @Override
+    public void execute() throws CustomException {
+        if (data1 == null || data1.isBlank()) {
+            throw new CustomException("Error! Invalid input! Data1 cannot be empty or null");
         }
-        if (!MasterFunction.checkIsValidEmail(parameters[2])) {
-            System.out.println("Error! Invalid input! Email address is not valid");
-            return;
+        if (data2 == null || data2.isBlank()) {
+            throw new CustomException("Error! Invalid input! Data2 cannot be empty or null");
         }
-        var data = MasterFunction.toTitleCase(parameters[0]) + " " + MasterFunction.toTitleCase(parameters[1]) + " " + MasterFunction.toTitleCase(parameters[2]);
-        receiver.addCommand(this, data);
+        if (data3 == null || data3.isBlank()) {
+            throw new CustomException("Error! Invalid input! Data3 cannot be empty or null");
+        }
+        if (!MasterFunction.checkIsValidEmail(data3)) {
+            throw new CustomException("Error! Invalid input! Email address is not valid");
+        }
+        var reply = receiver.addCommand(this, true);
+        setValue(reply[0], reply[1]);
+    }
+
+    public void setValue(int uuid, int position) {
+        dataStoredUUID = uuid;
+        dataStoredPosition = position;
     }
 }

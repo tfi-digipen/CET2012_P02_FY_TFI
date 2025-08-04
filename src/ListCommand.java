@@ -1,18 +1,32 @@
 public class ListCommand implements Command {
-    private String params;
     private Receiver receiver;
 
     public ListCommand(Receiver receiver) {
         this.receiver = receiver;
     }
 
-    public ListCommand(Receiver receiver, String params) {
-        this.receiver = receiver;
-        this.params = params;
+    @Override
+    public String[] getData() {
+        return new String[0];
+    }
+
+    @Override
+    public int getDataStoredPosition() {
+        return -1;
+    }
+
+    @Override
+    public int getDataStoredUUID() {
+        return -1;
+    }
+
+    @Override
+    public String getCommandName() {
+        return "List";
     }
 
     @Override
     public void execute() {
-
+        receiver.listCommand();
     }
 }

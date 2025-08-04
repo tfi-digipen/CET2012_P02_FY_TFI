@@ -1,3 +1,11 @@
 public interface Command {
-    void execute();
+    void execute() throws CustomException;
+
+    String[] getData();
+
+    int getDataStoredPosition();
+
+    int getDataStoredUUID();
+
+    String getCommandName();
 }

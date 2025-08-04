@@ -1,36 +1,50 @@
 public class DeleteCommand implements Command {
     private Receiver receiver;
-    private String params;
+    protected String index;
+    private int dataStoredPosition;
+    private int dataStoredUUID;
 
-    public DeleteCommand(Receiver receiver, String params) {
+    public DeleteCommand(Receiver receiver, String index) {
         this.receiver = receiver;
-        this.params = params;
+        this.index = index;
     }
 
     @Override
-    public void execute() {
-        var parameters = params.split(" ");
-        if (parameters.length != 1) {
-            System.out.println("Error! Invalid input! Delete command need 1 parameter");
-            return;
-        }
-        int index = -1;
+    public String[] getData() {
+        return new String[]{index};
+    }
+
+    @Override
+    public int getDataStoredPosition() {
+        return dataStoredPosition;
+    }
+
+    @Override
+    public int getDataStoredUUID() {
+        return dataStoredUUID;
+    }
+
+    @Override
+    public String getCommandName() {
+        return "Delete";
+    }
+
+    @Override
+    public void execute() throws CustomException {
+        int idx = -1;
         try {
-            index = Integer.parseInt(parameters[0]);
+            idx = Integer.parseInt(index);
         } catch (Exception e) {
-            System.out.println("Error! Invalid input! Index value not valid integer number");
-            return;
+            throw new CustomException("Error! Invalid input! Index value not valid integer number");
         }
-        if (index < 1) {
-            System.out.println("Error! Invalid input! Index value must be positive number");
-            return;
+        if (idx < 1) {
+            throw new CustomException("Error! Invalid input! Index value must be positive number");
         }
         var count = receiver.dataStore.size();
-        if (count < index) {
-            System.out.println("Error! Invalid input! Index value exceed stored data count");
-            return;
+        if (count < idx) {
+            throw new CustomException("Error! Invalid input! Index value exceed stored data count");
         }
-        int toDeletePosition = index - 1;
-        receiver.deleteCommand(toDeletePosition);
+        dataStoredPosition = idx - 1;
+        dataStoredUUID = receiver.deleteCommand(this, true);
     }
 }
