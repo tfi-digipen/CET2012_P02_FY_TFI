@@ -20,11 +20,6 @@ public class UndoCommand implements Command {
     }
 
     @Override
-    public int getDataStoredUUID() {
-        return -1;
-    }
-
-    @Override
     public String getCommandName() {
         return "Undo";
     }
@@ -35,5 +30,9 @@ public class UndoCommand implements Command {
             throw new CustomException("Error! Invalid input! No commands to undo.");
         }
         receiver.undoCommand();
+    }
+
+    @Override
+    public void undo() {
     }
 }

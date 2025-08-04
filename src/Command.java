@@ -5,7 +5,6 @@ public interface Command {
 
     int getDataStoredPosition();
 
-    int getDataStoredUUID();
-
     String getCommandName();
+    void undo();
 }

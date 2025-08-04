@@ -16,11 +16,6 @@ public class ListCommand implements Command {
     }
 
     @Override
-    public int getDataStoredUUID() {
-        return -1;
-    }
-
-    @Override
     public String getCommandName() {
         return "List";
     }
@@ -28,5 +23,9 @@ public class ListCommand implements Command {
     @Override
     public void execute() {
         receiver.listCommand();
+    }
+
+    @Override
+    public void undo() {
     }
 }

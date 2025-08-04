@@ -4,8 +4,8 @@ public class UpdateCommand implements Command {
     protected String data1;
     protected String data2;
     protected String data3;
+    protected String[] undoData;
     protected int dataStoredPosition;
-    private int dataStoredUUID;
 
     public UpdateCommand(Receiver receiver, String data) throws CustomException {
         this.receiver = receiver;
@@ -53,11 +53,6 @@ public class UpdateCommand implements Command {
     }
 
     @Override
-    public int getDataStoredUUID() {
-        return dataStoredUUID;
-    }
-
-    @Override
     public String getCommandName() {
         return "Update";
     }
@@ -80,10 +75,16 @@ public class UpdateCommand implements Command {
         if (data1 == null) {
             throw new CustomException("Error! Invalid input! Data1 cannot be empty or null");
         }
-        dataStoredPosition = idx - 1;
         if (!MasterFunction.checkIsValidEmail(data3)) {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
-        dataStoredUUID = receiver.updateCommand(this, true);
+        dataStoredPosition = idx - 1;
+        undoData = receiver.dataStore.get(dataStoredPosition);
+        receiver.updateCommand(this);
+    }
+
+    @Override
+    public void undo() {
+        receiver.undoUpdate(dataStoredPosition, undoData);
     }
 }

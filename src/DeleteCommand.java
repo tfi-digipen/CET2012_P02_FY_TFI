@@ -2,7 +2,7 @@ public class DeleteCommand implements Command {
     private Receiver receiver;
     protected String index;
     private int dataStoredPosition;
-    private int dataStoredUUID;
+    protected String[] undoData;
 
     public DeleteCommand(Receiver receiver, String index) {
         this.receiver = receiver;
@@ -17,11 +17,6 @@ public class DeleteCommand implements Command {
     @Override
     public int getDataStoredPosition() {
         return dataStoredPosition;
-    }
-
-    @Override
-    public int getDataStoredUUID() {
-        return dataStoredUUID;
     }
 
     @Override
@@ -45,6 +40,12 @@ public class DeleteCommand implements Command {
             throw new CustomException("Error! Invalid input! Index value exceed stored data count");
         }
         dataStoredPosition = idx - 1;
-        dataStoredUUID = receiver.deleteCommand(this, true);
+        undoData = receiver.dataStore.get(dataStoredPosition);
+        receiver.deleteCommand(dataStoredPosition);
+    }
+
+    @Override
+    public void undo() {
+        receiver.undoDelete(dataStoredPosition, undoData);
     }
 }

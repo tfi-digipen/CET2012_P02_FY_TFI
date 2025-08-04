@@ -2,10 +2,9 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Receiver {
-    public ArrayList<String[]> dataStore;
-    public Stack<Command> commandStack;
+    protected ArrayList<String[]> dataStore;
+    protected Stack<Command> commandStack;
 
-    private int currentUUID;
     protected int lastUndoablePosition;
 
     private String originalFileName = "./dataStore.txt";
@@ -13,20 +12,13 @@ public class Receiver {
     public Receiver(Stack<Command> commandStack) {
         this.commandStack = commandStack;
         dataStore = new ArrayList<>();
-        currentUUID = 0;
         if (MasterFunction.checkIfFileExist(originalFileName)) {
             var content = MasterFunction.getFileContent(originalFileName);
             if (content.length > 0) {
-                int pos = 0;
                 for (var c : content) {
                     var data = c.split(" ");
-                    int toStoreUUID = currentUUID++;
-                    dataStore.add(new String[]{String.valueOf(toStoreUUID), data[0], data[1], data[2]});
-                    var addCommand = new AddCommand(this, data[0], data[1], data[2]);
-                    addCommand.setValue(toStoreUUID, pos++);
-                    commandStack.add(addCommand);
+                    dataStore.add(new String[]{data[0], data[1], data[2]});
                 }
-                lastUndoablePosition = commandStack.size();
             }
         }
     }
@@ -34,103 +26,45 @@ public class Receiver {
     public void storeToFile() {
         var sb = new StringBuilder();
         for (String[] data : dataStore) {
-            sb.append(data[1]).append(" ").append(data[2]).append(" ").append(data[3]).append("\n");
+            sb.append(data[0]).append(" ").append(data[1]).append(" ").append(data[2]).append("\n");
         }
         MasterFunction.writeToFile(originalFileName, sb.toString());
     }
 
-    public int[] addCommand(AddCommand command, boolean toStoreCommand) {
-        if (toStoreCommand)
-            commandStack.push(command);
-        int toStoreUUID = currentUUID++;
-        dataStore.add(new String[]{String.valueOf(toStoreUUID), MasterFunction.toTitleCase(command.data1), MasterFunction.toTitleCase(command.data2), command.data3});
-        return new int[]{toStoreUUID, dataStore.size() - 1};
+    public void addCommand(String data1, String data2, String data3) {
+        dataStore.add(new String[]{MasterFunction.toTitleCase(data1), MasterFunction.toTitleCase(data2), data3});
     }
 
-    public int updateCommand(UpdateCommand command, boolean toStoreCommand) {
-        if (toStoreCommand)
-            commandStack.push(command);
-        int indexToUpdate = command.getDataStoredPosition();
-        var tempData = dataStore.get(indexToUpdate);
-        tempData[1] = command.data1;
-        if (command.data2 != null) {
-            tempData[2] = command.data2;
-            if (command.data3 != null) {
-                tempData[3] = command.data3;
-            }
-        }
-        dataStore.set(indexToUpdate, tempData);
-        return Integer.parseInt(tempData[0]);
+    public void undoAdd(int toUndoindex) {
+        dataStore.remove(toUndoindex);
     }
 
-    public int deleteCommand(DeleteCommand command, boolean toStoreCommand) {
-        int toDeleteIndex = command.getDataStoredPosition();
-        var tempData = dataStore.get(toDeleteIndex);
-        int uuid = Integer.parseInt(tempData[0]);
-        var found = false;
-        for (var x : commandStack) {
-            if (x.getDataStoredUUID() == uuid && x.getCommandName().equals("Add")) {
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            var addCommandToStore = new AddCommand(this, tempData[1], tempData[2], tempData[3]);
-            addCommandToStore.setValue(uuid, toDeleteIndex);
-            commandStack.push(addCommandToStore);
-        }
-        if (toStoreCommand)
-            commandStack.push(command);
+    public void deleteCommand(int toDeleteIndex) {
         dataStore.remove(toDeleteIndex);
-        return uuid;
+    }
+
+    public void undoDelete(int revertPosition, String[] data) {
+        dataStore.add(revertPosition, data);
+    }
+
+    public void updateCommand(UpdateCommand command) {
+        var tempData = dataStore.get(command.dataStoredPosition);
+        tempData[0] = command.data1;
+        if (command.data2 != null) {
+            tempData[1] = command.data2;
+            if (command.data3 != null) {
+                tempData[2] = command.data3;
+            }
+        }
+    }
+
+    public void undoUpdate(int revertPosition, String[] data) {
+        dataStore.set(revertPosition, data);
     }
 
     public void undoCommand() {
-        var lastCommand = commandStack.pop();
-        var lastCommandClassName = lastCommand.getCommandName();
-        var lastCommandIndex = lastCommand.getDataStoredPosition();
-        var lastCommandUUID = lastCommand.getDataStoredUUID();
-        if (lastCommandClassName.equals("Add")) {
-            dataStore.removeLast();
-        } else if (lastCommandClassName.equals("Update")) {
-            int dataAddedStackPosition = -1;
-            for (int i = commandStack.size() - 1; i >= 0; i--) {
-                var command = commandStack.get(i);
-                var commandClassName = command.getCommandName();
-                if (commandClassName.equals("Add") && command.getDataStoredUUID() == lastCommandUUID) {
-                    var data = command.getData();
-                    dataStore.set(lastCommandIndex, new String[]{String.valueOf(lastCommandUUID), data[0], data[1], data[2]});
-                    dataAddedStackPosition = i;
-                    break;
-                }
-            }
-            for (int i = dataAddedStackPosition + 1; i < commandStack.size(); i++) {
-                var command = commandStack.get(i);
-                if (command.getDataStoredUUID() == lastCommandUUID && command.getCommandName().equals("Update")) {
-                    var update = (UpdateCommand) command;
-                    updateCommand(update, false);
-                }
-            }
-        } else if (lastCommandClassName.equals("Delete")) {
-            int dataAddedStackPosition = -1;
-            for (int i = commandStack.size() - 1; i >= 0; i--) {
-                var command = commandStack.get(i);
-                var commandClassName = command.getCommandName();
-                if (commandClassName.equals("Add") && command.getDataStoredUUID() == lastCommandUUID) {
-                    var data = command.getData();
-                    dataStore.add(lastCommandIndex, new String[]{String.valueOf(lastCommandUUID), data[0], data[1], data[2]});
-                    dataAddedStackPosition = i;
-                    break;
-                }
-            }
-            for (int i = dataAddedStackPosition + 1; i < commandStack.size(); i++) {
-                var command = commandStack.get(i);
-                if (command.getDataStoredUUID() == lastCommandUUID && command.getCommandName().equals("Update")) {
-                    var update = (UpdateCommand) command;
-                    updateCommand(update, false);
-                }
-            }
-        }
+        var command = commandStack.pop();
+        command.undo();
     }
 
     public void listCommand() {
@@ -140,7 +74,7 @@ public class Receiver {
         }
         for (int i = 0; i < dataStore.size(); i++) {
             var data = dataStore.get(i);
-            System.out.printf("%02d. %s %s %s\n", i + 1, data[1], data[2], data[3]);
+            System.out.printf("%02d. %s %s %s\n", i + 1, data[0], data[1], data[2]);
         }
     }
 }

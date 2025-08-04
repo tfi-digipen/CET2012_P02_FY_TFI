@@ -3,8 +3,7 @@ public class AddCommand implements Command {
     protected String data1;
     protected String data2;
     protected String data3;
-    private int dataStoredPosition;
-    private int dataStoredUUID;
+    protected int dataStoredPosition;
 
     public AddCommand(Receiver receiver, String data) {
         this.receiver = receiver;
@@ -32,11 +31,6 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public int getDataStoredUUID() {
-        return dataStoredUUID;
-    }
-
-    @Override
     public String getCommandName() {
         return "Add";
     }
@@ -55,12 +49,12 @@ public class AddCommand implements Command {
         if (!MasterFunction.checkIsValidEmail(data3)) {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
-        var reply = receiver.addCommand(this, true);
-        setValue(reply[0], reply[1]);
+        receiver.addCommand(data1, data2, data3);
+        dataStoredPosition = receiver.commandStack.size() - 1;
     }
 
-    public void setValue(int uuid, int position) {
-        dataStoredUUID = uuid;
-        dataStoredPosition = position;
+    @Override
+    public void undo() {
+        receiver.undoAdd(dataStoredPosition);
     }
 }
