@@ -45,19 +45,18 @@ public class DeleteCommand implements Command {
             throw new CustomException("Error! Invalid input! Index value exceed stored data count");
         }
         dataStoredPosition = idx - 1;
-        dataStoredUUID = receiver.deleteCommand(this, true);
         var tempData = receiver.dataStore.get(dataStoredPosition);
-        int uuid = Integer.parseInt(tempData[0]);
+        dataStoredUUID = Integer.parseInt(tempData[0]);
         var found = false;
         for (var x : receiver.commandStack) {
-            if (x.getDataStoredUUID() == uuid && x.getCommandName().equals("Add")) {
+            if (x.getDataStoredUUID() == dataStoredUUID && x.getCommandName().equals("Add")) {
                 found = true;
                 break;
             }
         }
         if (!found) {
             var addCommandToStore = new AddCommand(receiver, tempData[1], tempData[2], tempData[3]);
-            addCommandToStore.setValue(uuid, dataStoredPosition);
+            addCommandToStore.setValue(dataStoredUUID, dataStoredPosition);
             receiver.commandStack.push(addCommandToStore);
         }
         receiver.dataStore.remove(dataStoredPosition);
