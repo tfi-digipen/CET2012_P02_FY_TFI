@@ -2,8 +2,8 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-        /*var receiver = new Receiver();
         Stack<Command> history = new Stack<>();
+        var receiver = new Receiver(history);
         Command[] commands = new Command[13];
         commands[0] = new AddCommand(receiver, "first_name", "last_name", "ice-cream@alaskafields.org");
         commands[1] = new AddCommand(receiver, "john", "doe", "simple@example.com");
@@ -20,7 +20,7 @@ public class Main {
         commands[12] = new ListCommand(receiver);
         var invoker = new Invoker();
         invoker.setCommandsForExecution(commands);
-        invoker.executeCommand(history);*/
+        invoker.executeCommand(history);
 
         /*var email = "aaa@bbb.ccc";
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));

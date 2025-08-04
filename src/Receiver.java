@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class Receiver {
-    public Stack<Command> commandStack;
     public ArrayList<String[]> dataStore;
 
     private int currentUUID;
@@ -10,8 +9,7 @@ public class Receiver {
 
     private String originalFileName = "./dataStore.txt";
 
-    public Receiver() {
-        commandStack = new Stack<>();
+    public Receiver(Stack<Command> commandStack) {
         dataStore = new ArrayList<>();
         currentUUID = 0;
         if (MasterFunction.checkIfFileExist(originalFileName)) {

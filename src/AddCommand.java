@@ -6,6 +6,14 @@ public class AddCommand implements Command {
     private int dataStoredPosition;
     private int dataStoredUUID;
 
+    public AddCommand(Receiver receiver, String data) {
+        this.receiver = receiver;
+        var splitData = data.split(" ");
+        this.data1 = splitData[0];
+        this.data2 = splitData[1];
+        this.data3 = splitData[2];
+    }
+
     public AddCommand(Receiver receiver, String data1, String data2, String data3) {
         this.receiver = receiver;
         this.data1 = data1;

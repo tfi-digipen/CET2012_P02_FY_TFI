@@ -5,6 +5,10 @@ public class UndoCommand implements Command {
         this.receiver = receiver;
     }
 
+    public UndoCommand(Receiver receiver, String payload) {
+        this.receiver = receiver;
+    }
+
     @Override
     public String[] getData() {
         return new String[0];

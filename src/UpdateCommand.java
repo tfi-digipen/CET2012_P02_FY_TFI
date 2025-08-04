@@ -7,6 +7,20 @@ public class UpdateCommand implements Command {
     protected int dataStoredPosition;
     private int dataStoredUUID;
 
+    public UpdateCommand(Receiver receiver, String data) throws CustomException {
+        this.receiver = receiver;
+        var splitData = data.split(" ");
+        if (splitData.length < 2)
+            throw new CustomException("Update command need at least 2 args");
+        this.index = splitData[0];
+        this.data1 = splitData[1];
+        if (splitData.length > 2) {
+            this.data2 = splitData[2];
+            if (splitData.length > 3)
+                this.data3 = splitData[3];
+        }
+    }
+
     public UpdateCommand(Receiver receiver, String index, String data1) {
         this.receiver = receiver;
         this.index = index;
