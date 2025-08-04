@@ -77,13 +77,23 @@ public class UpdateCommand implements Command {
         if (count < idx) {
             throw new CustomException("Error! Invalid input! Index value exceed stored data count");
         }
-        if (data1 == null) {
+        if (data1 == null || data1.isBlank()) {
             throw new CustomException("Error! Invalid input! Data1 cannot be empty or null");
         }
         dataStoredPosition = idx - 1;
-        if (!MasterFunction.checkIsValidEmail(data3)) {
-            throw new CustomException("Error! Invalid input! Email address is not valid");
+        if (data3 != null && !data3.isBlank())
+            if (!MasterFunction.checkIsValidEmail(data3)) {
+                throw new CustomException("Error! Invalid input! Email address is not valid");
+            }
+        var tempData = receiver.dataStore.get(dataStoredPosition);
+        tempData[1] = MasterFunction.toTitleCase(data1);
+        if (data2 != null) {
+            tempData[2] = MasterFunction.toTitleCase(data2);
+            if (data3 != null) {
+                tempData[3] = data3;
+            }
         }
-        dataStoredUUID = receiver.updateCommand(this, true);
+        receiver.dataStore.set(dataStoredPosition, tempData);
+        dataStoredUUID = Integer.parseInt(tempData[0]);
     }
 }

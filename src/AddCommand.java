@@ -55,8 +55,9 @@ public class AddCommand implements Command {
         if (!MasterFunction.checkIsValidEmail(data3)) {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
-        var reply = receiver.addCommand(this, true);
-        setValue(reply[0], reply[1]);
+        dataStoredUUID = receiver.currentUUID++;
+        receiver.dataStore.add(new String[]{String.valueOf(dataStoredUUID), MasterFunction.toTitleCase(data1), MasterFunction.toTitleCase(data2), data3});
+        dataStoredPosition = receiver.dataStore.size() - 1;
     }
 
     public void setValue(int uuid, int position) {
