@@ -3,7 +3,7 @@ import java.util.Stack;
 
 public class Receiver {
     public ArrayList<String[]> dataStore;
-    private Stack<Command> commandStack;
+    public Stack<Command> commandStack;
 
     private int currentUUID;
     protected int lastUndoablePosition;
