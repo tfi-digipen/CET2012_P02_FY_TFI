@@ -3,6 +3,7 @@ import java.util.Stack;
 
 public class Receiver {
     public ArrayList<String[]> dataStore;
+    private Stack<Command> history;
 
     private int currentUUID;
     protected int lastUndoablePosition;
@@ -10,6 +11,7 @@ public class Receiver {
     private String originalFileName = "./dataStore.txt";
 
     public Receiver(Stack<Command> commandStack) {
+        this.history = commandStack;
         dataStore = new ArrayList<>();
         currentUUID = 0;
         if (MasterFunction.checkIfFileExist(originalFileName)) {
