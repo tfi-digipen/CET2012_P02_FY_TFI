@@ -22,11 +22,11 @@ public class Receiver {
                     var data = c.split(" ");
                     int toStoreUUID = currentUUID++;
                     dataStore.add(new String[]{String.valueOf(toStoreUUID), data[0], data[1], data[2]});
-                    var addCommand = new AddCommand(this, data[0], data[1], data[2]);
-                    addCommand.setValue(toStoreUUID, pos++);
-                    commandStack.add(addCommand);
+                    //var addCommand = new AddCommand(this, data[0], data[1], data[2]);
+                    //addCommand.setValue(toStoreUUID, pos++);
+                    //commandStack.add(addCommand);
                 }
-                lastUndoablePosition = commandStack.size();
+                //lastUndoablePosition = commandStack.size();
             }
         }
     }
