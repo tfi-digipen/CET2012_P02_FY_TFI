@@ -31,35 +31,34 @@ public class Receiver {
         MasterFunction.writeToFile(originalFileName, sb.toString());
     }
 
-    public void addCommand(String data1, String data2, String data3) {
+    public void add(String data1, String data2, String data3) {
         dataStore.add(new String[]{MasterFunction.toTitleCase(data1), MasterFunction.toTitleCase(data2), data3});
     }
 
-    public void undoAdd(int toUndoindex) {
-        dataStore.remove(toUndoindex);
+    public void insert(int insertPosition, String[] data) {
+        dataStore.add(insertPosition, data);
     }
 
-    public void deleteCommand(int toDeleteIndex) {
+    public void delete(int toDeleteIndex) {
         dataStore.remove(toDeleteIndex);
     }
 
-    public void undoDelete(int revertPosition, String[] data) {
-        dataStore.add(revertPosition, data);
+    public void update(int toUpdateIndex, String data1) {
+        var tempData = dataStore.get(toUpdateIndex);
+        tempData[0] = MasterFunction.toTitleCase(data1);
     }
 
-    public void updateCommand(UpdateCommand command) {
-        var tempData = dataStore.get(command.dataStoredPosition);
-        tempData[0] = command.data1;
-        if (command.data2 != null) {
-            tempData[1] = command.data2;
-            if (command.data3 != null) {
-                tempData[2] = command.data3;
-            }
-        }
+    public void update(int toUpdateIndex, String data1, String data2) {
+        var tempData = dataStore.get(toUpdateIndex);
+        tempData[0] = MasterFunction.toTitleCase(data1);
+        tempData[1] = MasterFunction.toTitleCase(data2);
     }
 
-    public void undoUpdate(int revertPosition, String[] data) {
-        dataStore.set(revertPosition, data);
+    public void update(int toUpdateIndex, String data1, String data2, String data3) {
+        var tempData = dataStore.get(toUpdateIndex);
+        tempData[0] = MasterFunction.toTitleCase(data1);
+        tempData[1] = MasterFunction.toTitleCase(data2);
+        tempData[2] = data3;
     }
 
     public void undoCommand() {

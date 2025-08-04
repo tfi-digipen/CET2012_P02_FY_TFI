@@ -43,21 +43,6 @@ public class UpdateCommand implements Command {
     }
 
     @Override
-    public String[] getData() {
-        return new String[]{index, data1, data2, data3};
-    }
-
-    @Override
-    public int getDataStoredPosition() {
-        return dataStoredPosition;
-    }
-
-    @Override
-    public String getCommandName() {
-        return "Update";
-    }
-
-    @Override
     public void execute() throws CustomException {
         int idx = -1;
         try {
@@ -80,11 +65,19 @@ public class UpdateCommand implements Command {
         }
         dataStoredPosition = idx - 1;
         undoData = receiver.dataStore.get(dataStoredPosition);
-        receiver.updateCommand(this);
+        if (data2 != null) {
+            if (data3 != null) {
+                receiver.update(dataStoredPosition, data1, data2, data3);
+            } else {
+                receiver.update(dataStoredPosition, data1, data2);
+            }
+        } else {
+            receiver.update(dataStoredPosition, data1);
+        }
     }
 
     @Override
     public void undo() {
-        receiver.undoUpdate(dataStoredPosition, undoData);
+        receiver.update(dataStoredPosition, undoData[0], undoData[1], undoData[2]);
     }
 }

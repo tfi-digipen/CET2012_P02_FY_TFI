@@ -21,21 +21,6 @@ public class AddCommand implements Command {
     }
 
     @Override
-    public String[] getData() {
-        return new String[]{data1, data2, data3};
-    }
-
-    @Override
-    public int getDataStoredPosition() {
-        return dataStoredPosition;
-    }
-
-    @Override
-    public String getCommandName() {
-        return "Add";
-    }
-
-    @Override
     public void execute() throws CustomException {
         if (data1 == null || data1.isBlank()) {
             throw new CustomException("Error! Invalid input! Data1 cannot be empty or null");
@@ -49,12 +34,12 @@ public class AddCommand implements Command {
         if (!MasterFunction.checkIsValidEmail(data3)) {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
-        receiver.addCommand(data1, data2, data3);
+        receiver.add(data1, data2, data3);
         dataStoredPosition = receiver.commandStack.size() - 1;
     }
 
     @Override
     public void undo() {
-        receiver.undoAdd(dataStoredPosition);
+        receiver.delete(dataStoredPosition);
     }
 }

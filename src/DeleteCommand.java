@@ -10,21 +10,6 @@ public class DeleteCommand implements Command {
     }
 
     @Override
-    public String[] getData() {
-        return new String[]{index};
-    }
-
-    @Override
-    public int getDataStoredPosition() {
-        return dataStoredPosition;
-    }
-
-    @Override
-    public String getCommandName() {
-        return "Delete";
-    }
-
-    @Override
     public void execute() throws CustomException {
         int idx = -1;
         try {
@@ -41,11 +26,11 @@ public class DeleteCommand implements Command {
         }
         dataStoredPosition = idx - 1;
         undoData = receiver.dataStore.get(dataStoredPosition);
-        receiver.deleteCommand(dataStoredPosition);
+        receiver.delete(dataStoredPosition);
     }
 
     @Override
     public void undo() {
-        receiver.undoDelete(dataStoredPosition, undoData);
+        receiver.insert(dataStoredPosition, undoData);
     }
 }
