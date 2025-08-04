@@ -31,28 +31,26 @@ public class MasterFunction {
     }
 
     public static boolean checkIsValidEmail(String input) {
-        //*String pattern = "^[0-9a-zA-Z_]+(?:.[0-9a-zA-Z_]+)*(?:-[0-9a-zA-Z_.]+)*[0-9a-zA-Z_]*@[0-9a-zA-Z]+(?:.[0-9a-zA-Z]+)*(?:-[0-9a-zA-Z.]+)*[0-9a-zA-Z_]*(?:\.[a-z]{2,3})$";
-//        String pattern = "^[0-9a-zA-Z_]+(?:(?:.-.){0,}(?:.-){0,}(?:.){0,1}[0-9a-zA-Z_])*(?:(?:-.-){0,}(?:-.){0,}(?:-){0,1}[0-9a-zA-Z_])*@[0-9a-zA-Z]+(?:(?:.-.){0,}(?:.-){0,}(?:.){0,1}[0-9a-zA-Z])*(?:(?:-.-){0,}(?:-.){0,}(?:-){0,1}[0-9a-zA-Z])*(?:\\.[a-z]{2,3})$";
-//        Pattern p = Pattern.compile(pattern);
-//        Matcher matcher = p.matcher(input);
-//        if (matcher.matches()) {
-//            var split = input.split("@");
-//            var firstChar = split[0].charAt(0);
-//            var lastChar = split[0].charAt(split[0].length() - 1);
-//            if (firstChar == '.' || firstChar == '-' || lastChar == '.' || lastChar == '-') {
-//                return false;
-//            }
-//            int dotCount = 0;
-//            int dashCount = 0;
-//            for (var c : split[0].toCharArray()) {
-//                if (c == '.')
-//                    dotCount++;
-//                else if (c == '-')
-//                    dashCount++;
-//            }
-//            return (dotCount <= 1 && dashCount <= 2);
-//        }
-//        return false;
-        return true;
+        String pattern = "^[0-9a-zA-Z_]+(?:(?:.-){0,}(?:.){0,1}[0-9a-zA-Z_])*(?:(?:-.){0,}(?:-){0,1}[0-9a-zA-Z_])*@[0-9a-zA-Z]+(?:(?:.-){0,}(?:.){0,1}[0-9a-zA-Z])*(?:(?:-.){0,}(?:-){0,1}[0-9a-zA-Z])*(?:\\.[a-z]{2,3})$";
+        Pattern p = Pattern.compile(pattern);
+        Matcher matcher = p.matcher(input);
+        if (matcher.matches()) {
+            var split = input.split("@");
+            var firstChar = split[0].charAt(0);
+            var lastChar = split[0].charAt(split[0].length() - 1);
+            if (firstChar == '.' || firstChar == '-' || lastChar == '.' || lastChar == '-') {
+                return false;
+            }
+            int dotCount = 0;
+            int dashCount = 0;
+            for (var c : split[0].toCharArray()) {
+                if (c == '.')
+                    dotCount++;
+                else if (c == '-')
+                    dashCount++;
+            }
+            return (dotCount <= 1 && dashCount <= 2);
+        }
+        return false;
     }
 }

@@ -1,16 +1,11 @@
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Receiver {
     protected ArrayList<String[]> dataStore;
-    protected Stack<Command> commandStack;
-
-    protected int lastUndoablePosition;
 
     private String originalFileName = "./dataStore.txt";
 
-    public Receiver(Stack<Command> commandStack) {
-        this.commandStack = commandStack;
+    public Receiver() {
         dataStore = new ArrayList<>();
         if (MasterFunction.checkIfFileExist(originalFileName)) {
             var content = MasterFunction.getFileContent(originalFileName);
@@ -59,11 +54,6 @@ public class Receiver {
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
         tempData[2] = data3;
-    }
-
-    public void undoCommand() {
-        var command = commandStack.pop();
-        command.undo();
     }
 
     public void listCommand() {

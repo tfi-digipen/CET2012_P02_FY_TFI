@@ -35,7 +35,7 @@ public class AddCommand implements Command {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
         receiver.add(data1, data2, data3);
-        dataStoredPosition = receiver.commandStack.size() - 1;
+        dataStoredPosition = receiver.dataStore.size() - 1;
     }
 
     @Override

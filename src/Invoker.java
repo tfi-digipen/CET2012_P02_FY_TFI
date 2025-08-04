@@ -14,10 +14,11 @@ public class Invoker {
         for (var command : cmdToExecute) {
             try {
                 command.execute();
+                if (command.getClass().getName().equals("ListCommand") || command.getClass().getName().equals("UndoCommand")) {
+                    continue;
+                }
                 history.push(command);
-            }
-            catch (CustomException e)
-            {
+            } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }
         }

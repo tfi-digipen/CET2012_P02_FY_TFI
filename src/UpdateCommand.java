@@ -60,9 +60,10 @@ public class UpdateCommand implements Command {
         if (data1 == null) {
             throw new CustomException("Error! Invalid input! Data1 cannot be empty or null");
         }
-        if (!MasterFunction.checkIsValidEmail(data3)) {
-            throw new CustomException("Error! Invalid input! Email address is not valid");
-        }
+        if (data3 != null && !data3.isBlank())
+            if (!MasterFunction.checkIsValidEmail(data3)) {
+                throw new CustomException("Error! Invalid input! Email address is not valid");
+            }
         dataStoredPosition = idx - 1;
         undoData = receiver.dataStore.get(dataStoredPosition);
         if (data2 != null) {
