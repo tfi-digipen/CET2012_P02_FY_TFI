@@ -22,7 +22,14 @@ public class ListCommand implements Command {
 
     @Override
     public void execute() {
-        receiver.listCommand();
+        if (receiver.dataStore.isEmpty()) {
+            System.out.println("No data to display");
+            return;
+        }
+        for (int i = 0; i < receiver.dataStore.size(); i++) {
+            var data = receiver.dataStore.get(i);
+            System.out.printf("%02d. %s %s %s\n", i + 1, data[1], data[2], data[3]);
+        }
     }
 
     @Override
