@@ -24,6 +24,9 @@ public class UpdateCommand implements Command {
         if (isProcessed) {
             throw new CustomException("Error! Command has been processed before");
         }
+        if (data == null) {
+            throw new CustomException("Error! Payload cannot be empty or null");
+        }
         var splitData = data.split(" ");
         if (splitData.length < 2)
             throw new CustomException("Update command need at least 2 args");

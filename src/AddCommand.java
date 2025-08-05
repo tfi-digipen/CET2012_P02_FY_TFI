@@ -22,6 +22,9 @@ public class AddCommand implements Command {
         if (isProcessed) {
             throw new CustomException("Error! Command has been processed before");
         }
+        if (data == null) {
+            throw new CustomException("Error! Payload cannot be empty or null");
+        }
         var splitData = data.split(" ");
         if (splitData.length != 3) {
             throw new CustomException("Error! Invalid input! Wrong number of payload");

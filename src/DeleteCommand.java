@@ -20,6 +20,9 @@ public class DeleteCommand implements Command {
         if (isProcessed) {
             throw new CustomException("Error! Command has been processed before");
         }
+        if (index == null) {
+            System.out.println("Error! Payload cannot be empty or null");
+        }
         int idx = -1;
         try {
             idx = Integer.parseInt(index);
