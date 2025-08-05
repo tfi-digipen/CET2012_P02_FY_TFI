@@ -30,6 +30,8 @@ public class UpdateCommand implements Command {
         var splitData = data.split(" ");
         if (splitData.length < 2)
             throw new CustomException("Update command need at least 2 args");
+        if (splitData.length > 4)
+            throw new CustomException("Update command at most 4 args");
         this.index = splitData[0];
         this.data1 = splitData[1];
         if (splitData.length > 2) {
