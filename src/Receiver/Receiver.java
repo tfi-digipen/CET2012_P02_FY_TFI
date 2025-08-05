@@ -1,7 +1,10 @@
+package Receiver;
+
+import MasterFunction.MasterFunction;
 import java.util.ArrayList;
 
 public class Receiver {
-    protected ArrayList<String[]> dataStore;
+    public ArrayList<String[]> dataStore;
 
     private String originalFileName = "./dataStore.txt";
 
@@ -30,37 +33,37 @@ public class Receiver {
         MasterFunction.writeToFile(originalFileName, sb.toString());
     }
 
-    protected void add(String data1, String data2, String data3) {
+    public void add(String data1, String data2, String data3) {
         dataStore.add(new String[]{MasterFunction.toTitleCase(data1), MasterFunction.toTitleCase(data2), data3});
     }
 
-    protected void insert(int insertPosition, String[] data) {
+    public void insert(int insertPosition, String[] data) {
         dataStore.add(insertPosition, data);
     }
 
-    protected void delete(int toDeleteIndex) {
+    public void delete(int toDeleteIndex) {
         dataStore.remove(toDeleteIndex);
     }
 
-    protected void update(int toUpdateIndex, String data1) {
+    public void update(int toUpdateIndex, String data1) {
         String[] tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
     }
 
-    protected void update(int toUpdateIndex, String data1, String data2) {
+    public void update(int toUpdateIndex, String data1, String data2) {
         String[] tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
     }
 
-    protected void update(int toUpdateIndex, String data1, String data2, String data3) {
+    public void update(int toUpdateIndex, String data1, String data2, String data3) {
         String[] tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
         tempData[2] = data3;
     }
 
-    protected void list() {
+    public void list() {
         if (dataStore.isEmpty()) {
             System.out.println("No data to display");
             return;

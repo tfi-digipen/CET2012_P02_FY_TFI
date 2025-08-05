@@ -1,3 +1,9 @@
+package Commands;
+
+import CustomException.CustomException;
+import MasterFunction.MasterFunction;
+import Receiver.Receiver;
+
 public class UpdateCommand implements Command {
     private final Receiver receiver;
     private boolean isProcessed;

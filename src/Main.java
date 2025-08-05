@@ -1,3 +1,8 @@
+import Commands.*;
+import Invoker.Invoker;
+import MasterFunction.MasterFunction;
+import Receiver.Receiver;
+
 import java.util.Stack;
 
 public class Main {

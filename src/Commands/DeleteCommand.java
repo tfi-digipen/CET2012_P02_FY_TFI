@@ -1,3 +1,8 @@
+package Commands;
+
+import CustomException.CustomException;
+import Receiver.Receiver;
+
 public class DeleteCommand implements Command {
     private final Receiver receiver;
     private boolean isProcessed;
