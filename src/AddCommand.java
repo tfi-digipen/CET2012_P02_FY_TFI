@@ -2,10 +2,10 @@ public class AddCommand implements Command {
     private Receiver receiver;
     private boolean isProcessed;
     private String data;
-    protected String data1;
-    protected String data2;
-    protected String data3;
-    protected int dataStoredPosition;
+    private String data1;
+    private String data2;
+    private String data3;
+    private int dataStoredPosition;
 
     public AddCommand(Receiver receiver, String data) {
         this.receiver = receiver;

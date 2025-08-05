@@ -1,9 +1,9 @@
 public class DeleteCommand implements Command {
     private Receiver receiver;
     private boolean isProcessed;
-    protected String index;
+    private String index;
     private int dataStoredPosition;
-    protected String[] undoData;
+    private String[] undoData;
 
     public DeleteCommand(Receiver receiver, String index) {
         this.receiver = receiver;

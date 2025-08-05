@@ -4,6 +4,10 @@ public class UndoCommand implements Command {
     private Receiver receiver;
     private Stack<Command> history;
 
+    public UndoCommand(Stack<Command> history) {
+        this.history = history;
+    }
+
     public UndoCommand(Receiver receiver, Stack<Command> history) {
         this.receiver = receiver;
         this.history = history;

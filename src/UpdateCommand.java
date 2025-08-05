@@ -2,12 +2,12 @@ public class UpdateCommand implements Command {
     private Receiver receiver;
     private boolean isProcessed;
     private String data;
-    protected String index;
-    protected String data1;
-    protected String data2;
-    protected String data3;
-    protected String[] undoData;
-    protected int dataStoredPosition;
+    private String index;
+    private String data1;
+    private String data2;
+    private String data3;
+    private String[] undoData;
+    private int dataStoredPosition;
 
     public UpdateCommand(Receiver receiver, String data) {
         this.receiver = receiver;
