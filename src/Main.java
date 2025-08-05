@@ -10,7 +10,7 @@ public class Main {
         Stack<Command> history = new Stack<>();
         Receiver receiver = new Receiver();
         Command[] commands = new Command[13];
-        commands[0] = new AddCommand(receiver, "first_name last_name ice-cream@alaskafields.org");
+        commands[0] = new AddCommand(receiver, "first_name last_name email");
         commands[1] = new AddCommand(receiver, "john doe simple@example.com");
         commands[2] = new AddCommand(receiver, "hanna moon tetter.tots@potatoesarelife.com");
         commands[3] = new AddCommand(receiver, "ah boon green-tea@teaforlife.com");

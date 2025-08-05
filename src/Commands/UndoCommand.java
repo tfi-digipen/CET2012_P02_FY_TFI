@@ -29,6 +29,7 @@ public class UndoCommand implements Command {
         }
         Command commandToUndo = history.pop();
         commandToUndo.undo();
+        System.out.println("Undo");
     }
 
     @Override

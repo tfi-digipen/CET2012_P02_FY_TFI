@@ -73,6 +73,7 @@ public class UpdateCommand implements Command {
             receiver.update(dataStoredPosition, data1);
         }
         isProcessed = true;
+        System.out.println("Update # " + data);
     }
 
     @Override

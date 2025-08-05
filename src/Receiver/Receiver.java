@@ -34,7 +34,8 @@ public class Receiver {
     }
 
     public void add(String data1, String data2, String data3) {
-        dataStore.add(new String[]{MasterFunction.toTitleCase(data1), MasterFunction.toTitleCase(data2), data3});
+        dataStore.add(new String[]{MasterFunction.toTitleCase(data1), MasterFunction.toTitleCase(data2),
+                data3.contains("@") ? data3 : MasterFunction.toTitleCase(data3)});
     }
 
     public void insert(int insertPosition, String[] data) {
@@ -60,7 +61,7 @@ public class Receiver {
         String[] tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
-        tempData[2] = data3;
+        tempData[2] = data3.contains("@") ? data3 : MasterFunction.toTitleCase(data3);
     }
 
     public void list() {

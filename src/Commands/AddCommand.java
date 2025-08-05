@@ -41,6 +41,7 @@ public class AddCommand implements Command {
         receiver.add(data1, data2, data3);
         dataStoredPosition = receiver.dataStore.size() - 1;
         isProcessed = true;
+        System.out.println("Add");
     }
 
     @Override

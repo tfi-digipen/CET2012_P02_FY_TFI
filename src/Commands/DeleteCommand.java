@@ -45,6 +45,7 @@ public class DeleteCommand implements Command {
         undoData = receiver.dataStore.get(dataStoredPosition);
         receiver.delete(dataStoredPosition);
         isProcessed = true;
+        System.out.println("Delete # " + index);
     }
 
     @Override
