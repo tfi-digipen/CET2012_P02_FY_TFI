@@ -29,15 +29,6 @@ public class AddCommand implements Command {
         this.data1 = splitData[0];
         this.data2 = splitData[1];
         this.data3 = splitData[2];
-        if (data1 == null || data1.isBlank()) {
-            throw new CustomException("Error! Invalid input! Data1 cannot be empty or null");
-        }
-        if (data2 == null || data2.isBlank()) {
-            throw new CustomException("Error! Invalid input! Data2 cannot be empty or null");
-        }
-        if (data3 == null || data3.isBlank()) {
-            throw new CustomException("Error! Invalid input! Data3 cannot be empty or null");
-        }
         if (!MasterFunction.checkIsValidEmail(data3)) {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
