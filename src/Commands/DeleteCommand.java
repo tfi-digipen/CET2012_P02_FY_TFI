@@ -22,6 +22,9 @@ public class DeleteCommand implements Command {
 
     @Override
     public void execute() throws CustomException {
+        if (receiver == null) {
+            throw new CustomException("Error! Receiver is null");
+        }
         if (isProcessed) {
             throw new CustomException("Error! Command has been processed before");
         }

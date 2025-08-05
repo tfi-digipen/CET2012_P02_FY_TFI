@@ -1,5 +1,6 @@
 package Commands;
 
+import CustomException.CustomException;
 import Receiver.Receiver;
 
 public class ListCommand implements Command {
@@ -15,7 +16,10 @@ public class ListCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws CustomException {
+        if (receiver == null) {
+            throw new CustomException("Error! Receiver is null");
+        }
         System.out.println("List");
         receiver.list();
     }
