@@ -1,7 +1,7 @@
 public class DeleteCommand implements Command {
-    private Receiver receiver;
+    private final Receiver receiver;
     private boolean isProcessed;
-    private String index;
+    private final String index;
     private int dataStoredPosition;
     private String[] undoData;
 
@@ -32,7 +32,7 @@ public class DeleteCommand implements Command {
         if (idx < 1) {
             throw new CustomException("Error! Invalid input! Index value must be positive number");
         }
-        var count = receiver.dataStore.size();
+        int count = receiver.dataStore.size();
         if (count < idx) {
             throw new CustomException("Error! Invalid input! Index value exceed stored data count");
         }

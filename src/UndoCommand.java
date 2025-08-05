@@ -23,7 +23,7 @@ public class UndoCommand implements Command {
         if (history == null || history.isEmpty()) {
             System.out.println("Error! History stack cannot be empty or null");
         }
-        var commandToUndo = history.pop();
+        Command commandToUndo = history.pop();
         commandToUndo.undo();
     }
 

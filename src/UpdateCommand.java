@@ -1,7 +1,7 @@
 public class UpdateCommand implements Command {
-    private Receiver receiver;
+    private final Receiver receiver;
     private boolean isProcessed;
-    private String data;
+    private final String data;
     private String index;
     private String data1;
     private String data2;
@@ -27,7 +27,7 @@ public class UpdateCommand implements Command {
         if (data == null) {
             throw new CustomException("Error! Payload cannot be empty or null");
         }
-        var splitData = data.split(" ");
+        String[] splitData = data.split(" ");
         if (splitData.length < 2)
             throw new CustomException("Update command need at least 2 args");
         if (splitData.length > 4)
@@ -48,7 +48,7 @@ public class UpdateCommand implements Command {
         if (idx < 1) {
             throw new CustomException("Error! Invalid input! Index value must be positive number");
         }
-        var count = receiver.dataStore.size();
+        int count = receiver.dataStore.size();
         if (count < idx) {
             throw new CustomException("Error! Invalid input! Index value exceed stored data count");
         }

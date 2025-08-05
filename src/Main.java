@@ -3,7 +3,7 @@ import java.util.Stack;
 public class Main {
     public static void main(String[] args) {
         Stack<Command> history = new Stack<>();
-        var receiver = new Receiver();
+        Receiver receiver = new Receiver();
         Command[] commands = new Command[13];
         commands[0] = new AddCommand(receiver, "first_name last_name ice-cream@alaskafields.org");
         commands[1] = new AddCommand(receiver, "john doe simple@example.com");
@@ -18,11 +18,11 @@ public class Main {
         commands[10] = new ListCommand(receiver);
         commands[11] = new UndoCommand(receiver, history);
         commands[12] = new ListCommand(receiver);
-        var invoker = new Invoker();
+        Invoker invoker = new Invoker();
         invoker.setCommandsForExecution(commands);
         invoker.executeCommand(history);
 
-        var email = "aaa@bbb.ccc";
+        String email = "aaa@bbb.ccc";
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
         email = "aaa@bbb.cccc";
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));

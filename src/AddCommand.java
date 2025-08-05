@@ -1,10 +1,7 @@
 public class AddCommand implements Command {
-    private Receiver receiver;
+    private final Receiver receiver;
     private boolean isProcessed;
-    private String data;
-    private String data1;
-    private String data2;
-    private String data3;
+    private final String data;
     private int dataStoredPosition;
 
     public AddCommand(Receiver receiver, String data) {
@@ -25,13 +22,13 @@ public class AddCommand implements Command {
         if (data == null) {
             throw new CustomException("Error! Payload cannot be empty or null");
         }
-        var splitData = data.split(" ");
+        String[] splitData = data.split(" ");
         if (splitData.length != 3) {
             throw new CustomException("Error! Invalid input! Wrong number of payload");
         }
-        this.data1 = splitData[0];
-        this.data2 = splitData[1];
-        this.data3 = splitData[2];
+        String data1 = splitData[0];
+        String data2 = splitData[1];
+        String data3 = splitData[2];
         if (!MasterFunction.checkIsValidEmail(data3)) {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
@@ -43,7 +40,7 @@ public class AddCommand implements Command {
     @Override
     public void undo() throws CustomException {
         if (!isProcessed) {
-            throw new CustomException("Error! Command has never been procesed before!");
+            throw new CustomException("Error! Command has never been processed before!");
         }
         receiver.delete(dataStoredPosition);
     }

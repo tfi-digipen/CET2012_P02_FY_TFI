@@ -11,7 +11,11 @@ public class Invoker {
         if (cmdToExecute == null) {
             System.out.println("No cmd to execute");
         }
-        for (var command : cmdToExecute) {
+        for (Command command : cmdToExecute) {
+            if (command == null) {
+                System.out.println("Error! Invalid command");
+                continue;
+            }
             try {
                 command.execute();
                 if (command.isUndoable()) {

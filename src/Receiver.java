@@ -12,10 +12,10 @@ public class Receiver {
 
     private void loadFromFileAndStoreIntoDataStoreIfExist() {
         if (MasterFunction.checkIfFileExist(originalFileName)) {
-            var content = MasterFunction.getFileContent(originalFileName);
+            String[] content = MasterFunction.getFileContent(originalFileName);
             if (content.length > 0) {
-                for (var c : content) {
-                    var data = c.split(" ");
+                for (String c : content) {
+                    String[] data = c.split(" ");
                     dataStore.add(new String[]{data[0], data[1], data[2]});
                 }
             }
@@ -23,7 +23,7 @@ public class Receiver {
     }
 
     public void storeToFile() {
-        var sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         for (String[] data : dataStore) {
             sb.append(data[0]).append(" ").append(data[1]).append(" ").append(data[2]).append("\n");
         }
@@ -43,18 +43,18 @@ public class Receiver {
     }
 
     protected void update(int toUpdateIndex, String data1) {
-        var tempData = dataStore.get(toUpdateIndex);
+        String[] tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
     }
 
     protected void update(int toUpdateIndex, String data1, String data2) {
-        var tempData = dataStore.get(toUpdateIndex);
+        String[] tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
     }
 
     protected void update(int toUpdateIndex, String data1, String data2, String data3) {
-        var tempData = dataStore.get(toUpdateIndex);
+        String[] tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
         tempData[2] = data3;
@@ -66,7 +66,7 @@ public class Receiver {
             return;
         }
         for (int i = 0; i < dataStore.size(); i++) {
-            var data = dataStore.get(i);
+            String[] data = dataStore.get(i);
             System.out.printf("%02d. %s %s %s\n", i + 1, data[0], data[1], data[2]);
         }
     }
