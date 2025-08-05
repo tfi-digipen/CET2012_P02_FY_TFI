@@ -10,7 +10,12 @@ public class UndoCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public boolean isUndoable() {
+        return false;
+    }
+
+    @Override
+    public void execute() throws CustomException {
         var commandToUndo = history.pop();
         commandToUndo.undo();
     }

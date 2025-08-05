@@ -1,5 +1,7 @@
 public class UpdateCommand implements Command {
     private Receiver receiver;
+    private boolean isProcessed;
+    private String data;
     protected String index;
     protected String data1;
     protected String data2;
@@ -7,8 +9,21 @@ public class UpdateCommand implements Command {
     protected String[] undoData;
     protected int dataStoredPosition;
 
-    public UpdateCommand(Receiver receiver, String data) throws CustomException {
+    public UpdateCommand(Receiver receiver, String data) {
         this.receiver = receiver;
+        this.data = data;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return true;
+    }
+
+    @Override
+    public void execute() throws CustomException {
+        if (isProcessed) {
+            throw new CustomException("Error! Command has been processed before");
+        }
         var splitData = data.split(" ");
         if (splitData.length < 2)
             throw new CustomException("Update command need at least 2 args");
@@ -19,31 +34,6 @@ public class UpdateCommand implements Command {
             if (splitData.length > 3)
                 this.data3 = splitData[3];
         }
-    }
-
-    public UpdateCommand(Receiver receiver, String index, String data1) {
-        this.receiver = receiver;
-        this.index = index;
-        this.data1 = data1;
-    }
-
-    public UpdateCommand(Receiver receiver, String index, String data1, String data2) {
-        this.receiver = receiver;
-        this.index = index;
-        this.data1 = data1;
-        this.data2 = data2;
-    }
-
-    public UpdateCommand(Receiver receiver, String index, String data1, String data2, String data3) {
-        this.receiver = receiver;
-        this.index = index;
-        this.data1 = data1;
-        this.data2 = data2;
-        this.data3 = data3;
-    }
-
-    @Override
-    public void execute() throws CustomException {
         int idx = -1;
         try {
             idx = Integer.parseInt(index);
@@ -75,10 +65,14 @@ public class UpdateCommand implements Command {
         } else {
             receiver.update(dataStoredPosition, data1);
         }
+        isProcessed = true;
     }
 
     @Override
-    public void undo() {
+    public void undo() throws CustomException {
+        if (!isProcessed) {
+            throw new CustomException("Error! Command has never been procesed before!");
+        }
         receiver.update(dataStoredPosition, undoData[0], undoData[1], undoData[2]);
     }
 }

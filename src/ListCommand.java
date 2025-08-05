@@ -6,8 +6,13 @@ public class ListCommand implements Command {
     }
 
     @Override
+    public boolean isUndoable() {
+        return false;
+    }
+
+    @Override
     public void execute() {
-        receiver.listCommand();
+        receiver.list();
     }
 
     @Override

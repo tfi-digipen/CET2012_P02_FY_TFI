@@ -7,6 +7,10 @@ public class Receiver {
 
     public Receiver() {
         dataStore = new ArrayList<>();
+        loadFromFileAndStoreIntoDataStoreIfExist();
+    }
+
+    private void loadFromFileAndStoreIntoDataStoreIfExist() {
         if (MasterFunction.checkIfFileExist(originalFileName)) {
             var content = MasterFunction.getFileContent(originalFileName);
             if (content.length > 0) {
@@ -26,37 +30,37 @@ public class Receiver {
         MasterFunction.writeToFile(originalFileName, sb.toString());
     }
 
-    public void add(String data1, String data2, String data3) {
+    protected void add(String data1, String data2, String data3) {
         dataStore.add(new String[]{MasterFunction.toTitleCase(data1), MasterFunction.toTitleCase(data2), data3});
     }
 
-    public void insert(int insertPosition, String[] data) {
+    protected void insert(int insertPosition, String[] data) {
         dataStore.add(insertPosition, data);
     }
 
-    public void delete(int toDeleteIndex) {
+    protected void delete(int toDeleteIndex) {
         dataStore.remove(toDeleteIndex);
     }
 
-    public void update(int toUpdateIndex, String data1) {
+    protected void update(int toUpdateIndex, String data1) {
         var tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
     }
 
-    public void update(int toUpdateIndex, String data1, String data2) {
+    protected void update(int toUpdateIndex, String data1, String data2) {
         var tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
     }
 
-    public void update(int toUpdateIndex, String data1, String data2, String data3) {
+    protected void update(int toUpdateIndex, String data1, String data2, String data3) {
         var tempData = dataStore.get(toUpdateIndex);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
         tempData[2] = data3;
     }
 
-    public void listCommand() {
+    protected void list() {
         if (dataStore.isEmpty()) {
             System.out.println("No data to display");
             return;

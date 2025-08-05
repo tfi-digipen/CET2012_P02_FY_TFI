@@ -14,10 +14,9 @@ public class Invoker {
         for (var command : cmdToExecute) {
             try {
                 command.execute();
-                if (command.getClass().getName().equals("ListCommand") || command.getClass().getName().equals("UndoCommand")) {
-                    continue;
+                if (command.isUndoable()) {
+                    history.push(command);
                 }
-                history.push(command);
             } catch (CustomException e) {
                 System.out.println(e.getMessage());
             }

@@ -1,5 +1,6 @@
 public class DeleteCommand implements Command {
     private Receiver receiver;
+    private boolean isProcessed;
     protected String index;
     private int dataStoredPosition;
     protected String[] undoData;
@@ -10,7 +11,15 @@ public class DeleteCommand implements Command {
     }
 
     @Override
+    public boolean isUndoable() {
+        return true;
+    }
+
+    @Override
     public void execute() throws CustomException {
+        if (isProcessed) {
+            throw new CustomException("Error! Command has been processed before");
+        }
         int idx = -1;
         try {
             idx = Integer.parseInt(index);
@@ -27,10 +36,14 @@ public class DeleteCommand implements Command {
         dataStoredPosition = idx - 1;
         undoData = receiver.dataStore.get(dataStoredPosition);
         receiver.delete(dataStoredPosition);
+        isProcessed = true;
     }
 
     @Override
-    public void undo() {
+    public void undo() throws CustomException {
+        if (!isProcessed) {
+            throw new CustomException("Error! Command has never been procesed before!");
+        }
         receiver.insert(dataStoredPosition, undoData);
     }
 }
