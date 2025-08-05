@@ -61,5 +61,7 @@ public class Main {
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
         email = "a@bb.cccc.dd";
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
+        email = "dsadsadasa_";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
     }
 }

@@ -35,7 +35,7 @@ public class MasterFunction {
     }
 
     public static boolean checkIsValidEmail(String input) {
-        String pattern = "^[0-9a-zA-Z_]+(?:(?:.-){0,}(?:.){0,1}[0-9a-zA-Z_])*(?:(?:-.){0,}(?:-){0,1}[0-9a-zA-Z_])*@[0-9a-zA-Z]+(?:(?:.-){0,}(?:.){0,1}[0-9a-zA-Z])*(?:(?:-.){0,}(?:-){0,1}[0-9a-zA-Z])*(?:\\.[a-z]{2,3})$";
+        String pattern = "^[0-9a-zA-Z_]+(?:(?:(?:.-){0,}(?:.){0,1}[0-9a-zA-Z_])*(?:(?:-.){0,}(?:-){0,1}[0-9a-zA-Z_])*@[0-9a-zA-Z]+(?:(?:.-){0,}(?:.){0,1}[0-9a-zA-Z])*(?:(?:-.){0,}(?:-){0,1}[0-9a-zA-Z])*(?:\\.[a-z]{2,3})){0,1}$";
         Pattern p = Pattern.compile(pattern);
         Matcher matcher = p.matcher(input);
         return matcher.matches();
