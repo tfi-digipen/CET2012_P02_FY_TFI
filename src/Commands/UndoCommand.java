@@ -25,7 +25,7 @@ public class UndoCommand implements Command {
     @Override
     public void execute() throws CustomException {
         if (history == null || history.isEmpty()) {
-            System.out.println("Error! History stack cannot be empty or null");
+            throw new CustomException("Error! History stack cannot be empty or null");
         }
         Command commandToUndo = history.pop();
         commandToUndo.undo();

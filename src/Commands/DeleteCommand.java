@@ -26,7 +26,7 @@ public class DeleteCommand implements Command {
             throw new CustomException("Error! Command has been processed before");
         }
         if (index == null) {
-            System.out.println("Error! Payload cannot be empty or null");
+            throw new CustomException("Error! Payload cannot be empty or null");
         }
         int idx = -1;
         try {
