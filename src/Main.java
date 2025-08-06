@@ -23,9 +23,12 @@ public class Main {
         commands[10] = new ListCommand(receiver);
         commands[11] = new UndoCommand(receiver, history);
         commands[12] = new ListCommand(receiver);
+        commands[12] = new UpdateCommand(receiver, "11 Adam");
+        commands[12] = new UpdateCommand(receiver, "Adam");
         Invoker invoker = new Invoker();
         invoker.setCommandsForExecution(commands);
         invoker.executeCommand(history);
+        receiver.storeToFile();
 
         String email = "aaa@bbb.ccc";
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));

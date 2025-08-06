@@ -1,5 +1,6 @@
 package Receiver;
 
+import CustomException.CustomException;
 import MasterFunction.MasterFunction;
 import java.util.ArrayList;
 
@@ -16,9 +17,13 @@ public class Receiver {
     private void loadFromFileAndStoreIntoDataStoreIfExist() {
         if (MasterFunction.checkIfFileExist(originalFileName)) {
             String[] content = MasterFunction.getFileContent(originalFileName);
-            if (content.length > 0) {
+            if (content != null && content.length > 0) {
                 for (String c : content) {
+                    if (c == null)
+                        continue;
                     String[] data = c.split(" ");
+                    if (data.length != 3)
+                        continue;
                     dataStore.add(new String[]{data[0], data[1], data[2]});
                 }
             }
@@ -42,7 +47,7 @@ public class Receiver {
         dataStore.add(insertPosition, data);
     }
 
-    public void delete(int toDeleteIndex) {
+    public void delete(int toDeleteIndex) throws CustomException {
         checkIsValidIndex(toDeleteIndex);
         dataStore.remove(toDeleteIndex);
     }
@@ -51,20 +56,20 @@ public class Receiver {
         dataStore.removeLast();
     }
 
-    public void update(int index, String data1) {
+    public void update(int index, String data1) throws CustomException {
         checkIsValidIndex(index);
         String[] tempData = dataStore.get(index);
         tempData[0] = MasterFunction.toTitleCase(data1);
     }
 
-    public void update(int index, String data1, String data2) {
+    public void update(int index, String data1, String data2) throws CustomException {
         checkIsValidIndex(index);
         String[] tempData = dataStore.get(index);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
     }
 
-    public void update(int index, String data1, String data2, String data3) {
+    public void update(int index, String data1, String data2, String data3) throws CustomException {
         checkIsValidIndex(index);
         String[] tempData = dataStore.get(index);
         tempData[0] = MasterFunction.toTitleCase(data1);
@@ -83,14 +88,14 @@ public class Receiver {
         }
     }
 
-    public String[] getData(int index) {
+    public String[] getData(int index) throws CustomException {
         checkIsValidIndex(index);
         return dataStore.get(index);
     }
 
-    public void checkIsValidIndex(int index) {
+    public void checkIsValidIndex(int index) throws CustomException {
         if (index < 0 || index >= dataStore.size()) {
-            throw new IndexOutOfBoundsException("Index out of bounds!");
+            throw new CustomException("Index out of bounds!");
         }
     }
 }
