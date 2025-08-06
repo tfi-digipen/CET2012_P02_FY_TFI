@@ -15,7 +15,10 @@ public class MasterFunction {
     public static String[] getFileContent(String fileName) {
         ArrayList<String> fileContentList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            fileContentList.add(br.readLine());
+            String content;
+            while ((content = br.readLine()) != null) {
+                fileContentList.add(content);
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -35,7 +38,9 @@ public class MasterFunction {
     }
 
     public static boolean checkIsValidEmail(String input) {
-        String pattern = "^[0-9a-zA-Z_]+(?:(?:(?:.-){0,}(?:.){0,1}[0-9a-zA-Z_])*(?:(?:-.){0,}(?:-){0,1}[0-9a-zA-Z_])*@[0-9a-zA-Z]+(?:(?:.-){0,}(?:.){0,1}[0-9a-zA-Z])*(?:(?:-.){0,}(?:-){0,1}[0-9a-zA-Z])*(?:\\.[a-z]{2,3})){0,1}$";
+        String pattern = "^([\\w]+(((\\.-)*(\\.){0,1}[\\w]{1,})*((-\\.)*(-){0,1}[\\w]{1,})*)*){1,}" +
+                "(@([0-9a-zA-Z]+(((\\.-)*(\\.){0,1}[0-9a-zA-Z]{1,})*((-\\.)*(-){0,1}[0-9a-zA-Z]{1,})*)*){1,}" +
+                "(\\.[a-z]{2,3}){1}){0,}$";
         Pattern p = Pattern.compile(pattern);
         Matcher matcher = p.matcher(input);
         return matcher.matches();

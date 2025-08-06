@@ -7,28 +7,29 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
-        Stack<Command> history = new Stack<>();
-        Receiver receiver = new Receiver();
-        Command[] commands = new Command[13];
-        commands[0] = new AddCommand(receiver, "first_name last_name email");
-        commands[1] = new AddCommand(receiver, "john doe simple@example.com");
-        commands[2] = new AddCommand(receiver, "hanna moon tetter.tots@potatoesarelife.com");
-        commands[3] = new AddCommand(receiver, "ah boon green-tea@teaforlife.com");
-        commands[4] = new ListCommand(receiver);
-        commands[5] = new UpdateCommand(receiver, "3 Adam");
-        commands[6] = new ListCommand(receiver);
-        commands[7] = new UpdateCommand(receiver,"1 blue bell ice-cream@alaskafields.org");
-        commands[8] = new ListCommand(receiver);
-        commands[9] = new DeleteCommand(receiver,"1");
-        commands[10] = new ListCommand(receiver);
-        commands[11] = new UndoCommand(receiver, history);
-        commands[12] = new ListCommand(receiver);
-        commands[12] = new UpdateCommand(receiver, "11 Adam");
-        commands[12] = new UpdateCommand(receiver, "Adam");
-        Invoker invoker = new Invoker();
-        invoker.setCommandsForExecution(commands);
-        invoker.executeCommand(history);
-        receiver.storeToFile();
+//        Stack<Command> history = new Stack<>();
+//        Receiver receiver = new Receiver();
+//        Command[] commands = new Command[13];
+//        commands[0] = new ListCommand(receiver);
+//        commands[0] = new AddCommand(receiver, "first_name last_name email");
+//        commands[1] = new AddCommand(receiver, "john doe simple@example.com");
+//        commands[2] = new AddCommand(receiver, "hanna moon tetter.tots@potatoesarelife.com");
+//        commands[3] = new AddCommand(receiver, "ah boon green-tea@teaforlife.com");
+//        commands[4] = new ListCommand(receiver);
+//        commands[5] = new UpdateCommand(receiver, "3 Adam");
+//        commands[6] = new ListCommand(receiver);
+//        commands[7] = new UpdateCommand(receiver,"1 blue bell ice-cream@alaskafields.org");
+//        commands[8] = new ListCommand(receiver);
+//        commands[9] = new DeleteCommand(receiver,"1");
+//        commands[10] = new ListCommand(receiver);
+//        commands[11] = new UndoCommand(receiver, history);
+//        commands[12] = new ListCommand(receiver);
+//        commands[12] = new UpdateCommand(receiver, "11 Adam");
+//        commands[12] = new UpdateCommand(receiver, "Adam");
+//        Invoker invoker = new Invoker();
+//        invoker.setCommandsForExecution(commands);
+//        invoker.executeCommand(history);
+        //receiver.storeToFile();
 
         String email = "aaa@bbb.ccc";
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
@@ -65,6 +66,10 @@ public class Main {
         email = "a@bb.cccc.dd";
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
         email = "dsadsadasa_";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
+        email = "d.-.-.sa-.--dsadasa_@gmail.com";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
+        email = "d.-.-.sa-..dsadasa_@gmail.com";
         System.out.println(email + " - " + MasterFunction.checkIsValidEmail(email));
     }
 }
