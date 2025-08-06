@@ -42,24 +42,21 @@ public class UpdateCommand implements Command {
             throw new CustomException("Update command need at least 2 args");
         if (splitData.length > 4)
             throw new CustomException("Update command at most 4 args");
-        this.index = splitData[0];
-        this.data1 = splitData[1];
-        if (splitData.length > 2) {
-            this.data2 = splitData[2];
-            if (splitData.length > 3)
-                this.data3 = splitData[3];
-        }
+        index = splitData[0];
         try {
             dataStoredPosition = Integer.parseInt(index) - 1;
         } catch (NumberFormatException | NullPointerException e) {
             throw new CustomException("Error! Invalid input! Index value not valid integer number");
         }
-        if (data3 != null && !MasterFunction.checkIsValidEmail(data3)) {
-            throw new CustomException("Error! Invalid input! Email address is not valid");
-        }
         undoData = receiver.getData(dataStoredPosition);
-        if (data2 != null) {
-            if (data3 != null) {
+        data1 = splitData[1];
+        if (splitData.length > 2) {
+            data2 = splitData[2];
+            if (splitData.length > 3) {
+                data3 = splitData[3];
+                if (!MasterFunction.checkIsValidEmail(data3)) {
+                    throw new CustomException("Error! Invalid input! Email address is not valid");
+                }
                 receiver.update(dataStoredPosition, data1, data2, data3);
             } else {
                 receiver.update(dataStoredPosition, data1, data2);
