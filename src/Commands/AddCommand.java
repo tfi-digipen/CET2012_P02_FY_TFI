@@ -7,8 +7,8 @@ import Receiver.Receiver;
 public class AddCommand implements Command {
     private final Receiver receiver;
     private boolean isProcessed;
+    private boolean doneUndo;
     private final String data;
-    private int dataStoredPosition;
 
     public AddCommand(Receiver receiver, String data) {
         this.receiver = receiver;
@@ -33,7 +33,7 @@ public class AddCommand implements Command {
         }
         String[] splitData = data.split(" ");
         if (splitData.length != 3) {
-            throw new CustomException("Error! Invalid input! Wrong number of payload");
+            throw new CustomException("Error! Invalid payload! 3 arguments required");
         }
         String data1 = splitData[0];
         String data2 = splitData[1];
@@ -42,7 +42,6 @@ public class AddCommand implements Command {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
         receiver.add(data1, data2, data3);
-        dataStoredPosition = receiver.dataStore.size() - 1;
         isProcessed = true;
         System.out.println("Add");
     }
@@ -52,6 +51,10 @@ public class AddCommand implements Command {
         if (!isProcessed) {
             throw new CustomException("Error! Command has never been processed before!");
         }
-        receiver.delete(dataStoredPosition);
+        if (doneUndo) {
+            throw new CustomException("Error! Command has already been undone!");
+        }
+        receiver.deleteLastData();
+        doneUndo = true;
     }
 }

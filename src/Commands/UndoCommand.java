@@ -27,12 +27,12 @@ public class UndoCommand implements Command {
         if (history == null || history.isEmpty()) {
             throw new CustomException("Error! History stack cannot be empty or null");
         }
-        Command commandToUndo = history.pop();
-        commandToUndo.undo();
+        history.pop().undo();
         System.out.println("Undo");
     }
 
     @Override
-    public void undo() {
+    public void undo() throws CustomException {
+        throw new CustomException("Error! Undo cannot be applied to undo");
     }
 }

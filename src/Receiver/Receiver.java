@@ -4,7 +4,7 @@ import MasterFunction.MasterFunction;
 import java.util.ArrayList;
 
 public class Receiver {
-    public ArrayList<String[]> dataStore;
+    private ArrayList<String[]> dataStore;
 
     private String originalFileName = "./dataStore.txt";
 
@@ -43,22 +43,30 @@ public class Receiver {
     }
 
     public void delete(int toDeleteIndex) {
+        checkIsValidIndex(toDeleteIndex);
         dataStore.remove(toDeleteIndex);
     }
 
-    public void update(int toUpdateIndex, String data1) {
-        String[] tempData = dataStore.get(toUpdateIndex);
+    public void deleteLastData() {
+        dataStore.removeLast();
+    }
+
+    public void update(int index, String data1) {
+        checkIsValidIndex(index);
+        String[] tempData = dataStore.get(index);
         tempData[0] = MasterFunction.toTitleCase(data1);
     }
 
-    public void update(int toUpdateIndex, String data1, String data2) {
-        String[] tempData = dataStore.get(toUpdateIndex);
+    public void update(int index, String data1, String data2) {
+        checkIsValidIndex(index);
+        String[] tempData = dataStore.get(index);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
     }
 
-    public void update(int toUpdateIndex, String data1, String data2, String data3) {
-        String[] tempData = dataStore.get(toUpdateIndex);
+    public void update(int index, String data1, String data2, String data3) {
+        checkIsValidIndex(index);
+        String[] tempData = dataStore.get(index);
         tempData[0] = MasterFunction.toTitleCase(data1);
         tempData[1] = MasterFunction.toTitleCase(data2);
         tempData[2] = data3.contains("@") ? data3 : MasterFunction.toTitleCase(data3);
@@ -72,6 +80,17 @@ public class Receiver {
         for (int i = 0; i < dataStore.size(); i++) {
             String[] data = dataStore.get(i);
             System.out.printf("%02d. %s %s %s\n", i + 1, data[0], data[1], data[2]);
+        }
+    }
+
+    public String[] getData(int index) {
+        checkIsValidIndex(index);
+        return dataStore.get(index);
+    }
+
+    public void checkIsValidIndex(int index) {
+        if (index < 0 || index >= dataStore.size()) {
+            throw new IndexOutOfBoundsException("Index out of bounds!");
         }
     }
 }

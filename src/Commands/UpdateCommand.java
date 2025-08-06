@@ -7,6 +7,7 @@ import Receiver.Receiver;
 public class UpdateCommand implements Command {
     private final Receiver receiver;
     private boolean isProcessed;
+    private boolean doneUndo;
     private final String data;
     private String index;
     private String data1;
@@ -48,24 +49,15 @@ public class UpdateCommand implements Command {
             if (splitData.length > 3)
                 this.data3 = splitData[3];
         }
-        int idx = -1;
         try {
-            idx = Integer.parseInt(index);
+            dataStoredPosition = Integer.parseInt(index) - 1;
         } catch (NumberFormatException | NullPointerException e) {
             throw new CustomException("Error! Invalid input! Index value not valid integer number");
-        }
-        if (idx < 1) {
-            throw new CustomException("Error! Invalid input! Index value must be positive number");
-        }
-        int count = receiver.dataStore.size();
-        if (count < idx) {
-            throw new CustomException("Error! Invalid input! Index value exceed stored data count");
         }
         if (data3 != null && !MasterFunction.checkIsValidEmail(data3)) {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
-        dataStoredPosition = idx - 1;
-        undoData = receiver.dataStore.get(dataStoredPosition);
+        undoData = receiver.getData(dataStoredPosition);
         if (data2 != null) {
             if (data3 != null) {
                 receiver.update(dataStoredPosition, data1, data2, data3);
@@ -84,6 +76,10 @@ public class UpdateCommand implements Command {
         if (!isProcessed) {
             throw new CustomException("Error! Command has never been procesed before!");
         }
+        if (doneUndo) {
+            throw new CustomException("Error! Command has already been undone!");
+        }
         receiver.update(dataStoredPosition, undoData[0], undoData[1], undoData[2]);
+        doneUndo = true;
     }
 }

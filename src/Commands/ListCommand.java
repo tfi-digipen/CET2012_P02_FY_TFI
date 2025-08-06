@@ -25,6 +25,7 @@ public class ListCommand implements Command {
     }
 
     @Override
-    public void undo() {
+    public void undo() throws CustomException {
+        throw new CustomException("Error! No undo for list");
     }
 }

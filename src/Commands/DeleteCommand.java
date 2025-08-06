@@ -6,6 +6,7 @@ import Receiver.Receiver;
 public class DeleteCommand implements Command {
     private final Receiver receiver;
     private boolean isProcessed;
+    private boolean doneUndo;
     private final String index;
     private int dataStoredPosition;
     private String[] undoData;
@@ -31,21 +32,12 @@ public class DeleteCommand implements Command {
         if (index == null) {
             throw new CustomException("Error! Payload cannot be empty or null");
         }
-        int idx = -1;
         try {
-            idx = Integer.parseInt(index);
+            dataStoredPosition = Integer.parseInt(index) - 1;
         } catch (Exception e) {
             throw new CustomException("Error! Invalid input! Index value not valid integer number");
         }
-        if (idx < 1) {
-            throw new CustomException("Error! Invalid input! Index value must be positive number");
-        }
-        int count = receiver.dataStore.size();
-        if (count < idx) {
-            throw new CustomException("Error! Invalid input! Index value exceed stored data count");
-        }
-        dataStoredPosition = idx - 1;
-        undoData = receiver.dataStore.get(dataStoredPosition);
+        undoData = receiver.getData(dataStoredPosition);
         receiver.delete(dataStoredPosition);
         isProcessed = true;
         System.out.println("Delete # " + index);
@@ -56,6 +48,10 @@ public class DeleteCommand implements Command {
         if (!isProcessed) {
             throw new CustomException("Error! Command has never been procesed before!");
         }
+        if (doneUndo) {
+            throw new CustomException("Error! Command has already been undone!");
+        }
         receiver.insert(dataStoredPosition, undoData);
+        doneUndo = true;
     }
 }
