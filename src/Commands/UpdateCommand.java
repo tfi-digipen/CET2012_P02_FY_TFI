@@ -2,19 +2,14 @@ package Commands;
 
 import CustomException.CustomException;
 import MasterFunction.MasterFunction;
-import Receiver.Receiver;
+import Receiver.*;
 
 public class UpdateCommand implements Command {
     private final Receiver receiver;
     private boolean isProcessed;
     private boolean doneUndo;
     private final String data;
-    private String index;
-    private String data1;
-    private String data2;
-    private String data3;
-    private String[] undoData;
-    private int dataStoredPosition;
+    private Receiver.BasicEmployeeInfo originalData;
 
     public UpdateCommand(Receiver receiver, String data) {
         this.receiver = receiver;
@@ -42,27 +37,28 @@ public class UpdateCommand implements Command {
             throw new CustomException("Update command need at least 2 args");
         if (splitData.length > 4)
             throw new CustomException("Update command at most 4 args");
-        index = splitData[0];
+        String index = splitData[0];
+        int dataStoredPosition = -1;
         try {
             dataStoredPosition = Integer.parseInt(index) - 1;
         } catch (NumberFormatException | NullPointerException e) {
             throw new CustomException("Error! Invalid input! Index value not valid integer number");
         }
-        undoData = receiver.getData(dataStoredPosition);
-        data1 = splitData[1];
+        originalData = receiver.getDataByIndex(dataStoredPosition);
+        String data1 = splitData[1];
         if (splitData.length > 2) {
-            data2 = splitData[2];
+            String data2 = splitData[2];
             if (splitData.length > 3) {
-                data3 = splitData[3];
+                String data3 = splitData[3];
                 if (!MasterFunction.checkIsValidEmail(data3)) {
                     throw new CustomException("Error! Invalid input! Email address is not valid");
                 }
-                receiver.update(dataStoredPosition, data1, data2, data3);
+                receiver.updateById(originalData.id, data1, data2, data3);
             } else {
-                receiver.update(dataStoredPosition, data1, data2);
+                receiver.updateById(originalData.id, data1, data2);
             }
         } else {
-            receiver.update(dataStoredPosition, data1);
+            receiver.updateById(originalData.id, data1);
         }
         isProcessed = true;
         System.out.println("Update # " + data);
@@ -76,7 +72,7 @@ public class UpdateCommand implements Command {
         if (doneUndo) {
             throw new CustomException("Error! Command has already been undone!");
         }
-        receiver.update(dataStoredPosition, undoData[0], undoData[1], undoData[2]);
+        receiver.updateById(originalData.id, originalData.data1, originalData.data2, originalData.data3);
         doneUndo = true;
     }
 }

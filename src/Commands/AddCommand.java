@@ -9,6 +9,7 @@ public class AddCommand implements Command {
     private boolean isProcessed;
     private boolean doneUndo;
     private final String data;
+    private int id;
 
     public AddCommand(Receiver receiver, String data) {
         this.receiver = receiver;
@@ -41,7 +42,7 @@ public class AddCommand implements Command {
         if (!MasterFunction.checkIsValidEmail(data3)) {
             throw new CustomException("Error! Invalid input! Email address is not valid");
         }
-        receiver.add(data1, data2, data3);
+        id = receiver.add(data1, data2, data3);
         isProcessed = true;
         System.out.println("Add");
     }
@@ -54,7 +55,7 @@ public class AddCommand implements Command {
         if (doneUndo) {
             throw new CustomException("Error! Command has already been undone!");
         }
-        receiver.deleteLastData();
+        receiver.deleteById(id);
         doneUndo = true;
     }
 }

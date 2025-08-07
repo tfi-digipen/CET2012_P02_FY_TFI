@@ -1,15 +1,14 @@
 package Commands;
 
 import CustomException.CustomException;
-import Receiver.Receiver;
+import Receiver.*;
 
 public class DeleteCommand implements Command {
     private final Receiver receiver;
     private boolean isProcessed;
     private boolean doneUndo;
     private final String index;
-    private int dataStoredPosition;
-    private String[] undoData;
+    private Receiver.BasicEmployeeInfo originalData;
 
     public DeleteCommand(Receiver receiver, String index) {
         this.receiver = receiver;
@@ -32,13 +31,14 @@ public class DeleteCommand implements Command {
         if (index == null) {
             throw new CustomException("Error! Payload cannot be empty or null");
         }
+        int dataStoredPosition = -1;
         try {
             dataStoredPosition = Integer.parseInt(index) - 1;
         } catch (Exception e) {
             throw new CustomException("Error! Invalid input! Index value not valid integer number");
         }
-        undoData = receiver.getData(dataStoredPosition);
-        receiver.delete(dataStoredPosition);
+        originalData = receiver.getDataByIndex(dataStoredPosition);
+        receiver.deleteByIndex(dataStoredPosition);
         isProcessed = true;
         System.out.println("Delete # " + index);
     }
@@ -46,12 +46,12 @@ public class DeleteCommand implements Command {
     @Override
     public void undo() throws CustomException {
         if (!isProcessed) {
-            throw new CustomException("Error! Command has never been procesed before!");
+            throw new CustomException("Error! Command has never been processed before!");
         }
         if (doneUndo) {
             throw new CustomException("Error! Command has already been undone!");
         }
-        receiver.insert(dataStoredPosition, undoData);
+        receiver.insert(originalData);
         doneUndo = true;
     }
 }
