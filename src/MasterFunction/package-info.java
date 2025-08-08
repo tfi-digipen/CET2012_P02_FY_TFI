@@ -1,4 +1,4 @@
 /**
- * Provide the necessary function e.g. file input output, email check, etc
+ * Provide the necessary function like email checking, file handling
  */
 package MasterFunction;
