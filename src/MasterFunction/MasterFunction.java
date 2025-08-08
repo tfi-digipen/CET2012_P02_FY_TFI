@@ -69,11 +69,15 @@ public class MasterFunction {
      * @return true if input valid
      */
     public static boolean checkIsValidEmailOrData3(String input) {
-        String pattern = "^[\\w]+((((\\.){0,1}[\\w]{1,})*((-){0,1}[\\w]{1,})*)*" +
-                "@[0-9a-zA-Z]+(((\\.){0,1}[0-9a-zA-Z]{1,})*((-){0,1}[0-9a-zA-Z]{1,})*)*" +
-                "(\\.[a-z]{2,3}){1}){0,1}$";
-        Pattern p = Pattern.compile(pattern);
         Matcher matcher = p.matcher(input);
         return matcher.matches();
     }
+
+    /**
+     * Prepared regex pattern and compile once
+     * To save the resource required to compile pattern everytime method run
+     */
+    private static final Pattern p = Pattern.compile("^[\\w]+((((\\.){0,1}[\\w]{1,})*((-){0,1}[\\w]{1,})*)*" +
+            "@[0-9a-zA-Z]+(((\\.){0,1}[0-9a-zA-Z]{1,})*((-){0,1}[0-9a-zA-Z]{1,})*)*" +
+            "(\\.[a-z]{2,3}){1}){0,1}$");
 }

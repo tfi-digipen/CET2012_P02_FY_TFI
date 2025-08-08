@@ -66,6 +66,10 @@ public class DeleteCommand implements Command {
         if (index == null) {
             throw new CustomException("Error in Delete Command! Payload cannot be empty or null");
         }
+        String[] splitData = index.split(" ");
+        if (splitData.length != 1) {
+            throw new CustomException("Error in Delete Command! Invalid payload! 1 argument only");
+        }
         int dataStoredPosition = -1;
         try {
             dataStoredPosition = Integer.parseInt(index.trim()) - 1;

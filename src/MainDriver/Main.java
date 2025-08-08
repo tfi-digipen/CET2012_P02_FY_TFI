@@ -1,6 +1,7 @@
 package MainDriver;
 
 import Commands.*;
+import MasterFunction.MasterFunction;
 import Invoker.Invoker;
 import Receiver.Receiver;
 
@@ -11,6 +12,9 @@ import java.util.Stack;
  * Main class driver
  */
 public class Main {
+    /**
+     * Main constructor for Main
+     */
     private Main(){}
 
     /**
@@ -18,36 +22,36 @@ public class Main {
      * @param args Additional args for the application, not required at the moment
      */
     public static void main(String[] args) {
-        Stack<Command> history = new Stack<>();
-        Receiver receiver = new Receiver();
-        Invoker invoker = new Invoker();
-        ArrayList<Command> c = new ArrayList<>();
-        c.add(new ListCommand(null));
-        c.add(new UndoCommand(null));
-        c.add(new UndoCommand(null, history));
-        c.add(new UndoCommand(receiver, history));
-        c.add(new DeleteCommand(null, "1"));
-        c.add(new ListCommand(receiver));
-        c.add(new DeleteCommand(receiver, "-1"));
-        c.add(new DeleteCommand(receiver, "a"));
-        c.add(new DeleteCommand(receiver, "1"));
-        c.add(new AddCommand(receiver, "first_name last_name email"));
-        c.add(new AddCommand(receiver, "john doe simple@example.com"));
-        c.add(new AddCommand(receiver, "hanna moon tetter.tots@potatoesarelife.com"));
-        c.add(new AddCommand(receiver, "ah boon green-tea@teaforlife.com"));
-        c.add(new ListCommand(receiver));
-        c.add(new UpdateCommand(receiver, "aDam voX terra"));
-        c.add(new ListCommand(receiver));
-        c.add(new UpdateCommand(receiver, "3 aDam voX terra"));
-        c.add(new ListCommand(receiver));
-        c.add(new UpdateCommand(receiver, "3 black bell ice-cream@alaskafields.org"));
-        c.add(new ListCommand(receiver));
-        c.add(new UpdateCommand(receiver, "3 white"));
-        c.add(new ListCommand(receiver));
-        c.add(new UpdateCommand(receiver, "3 green ice"));
-        c.add(new ListCommand(receiver));
-        c.add(new UpdateCommand(receiver, "3 pink fire test"));
-        c.add(new ListCommand(receiver));
+//        Stack<Command> history = new Stack<>();
+//        Receiver receiver = new Receiver();
+//        Invoker invoker = new Invoker();
+//        ArrayList<Command> c = new ArrayList<>();
+//        c.add(new ListCommand(null));
+//        c.add(new UndoCommand(null));
+//        c.add(new UndoCommand(null, history));
+//        c.add(new UndoCommand(receiver, history));
+//        c.add(new DeleteCommand(null, "1"));
+//        c.add(new ListCommand(receiver));
+//        c.add(new DeleteCommand(receiver, "-1"));
+//        c.add(new DeleteCommand(receiver, "a"));
+//        c.add(new DeleteCommand(receiver, "1"));
+//        c.add(new AddCommand(receiver, "first_name last_name email"));
+//        c.add(new AddCommand(receiver, "john doe simple@example.com"));
+//        c.add(new AddCommand(receiver, "hanna moon tetter.tots@potatoesarelife.com"));
+//        c.add(new AddCommand(receiver, "ah boon green-tea@teaforlife.com"));
+//        c.add(new ListCommand(receiver));
+//        c.add(new UpdateCommand(receiver, "aDam voX terra"));
+//        c.add(new ListCommand(receiver));
+//        c.add(new UpdateCommand(receiver, "3 aDam voX terra"));
+//        c.add(new ListCommand(receiver));
+//        c.add(new UpdateCommand(receiver, "3 black bell ice-cream@alaskafields.org"));
+//        c.add(new ListCommand(receiver));
+//        c.add(new UpdateCommand(receiver, "3 white"));
+//        c.add(new ListCommand(receiver));
+//        c.add(new UpdateCommand(receiver, "3 green ice"));
+//        c.add(new ListCommand(receiver));
+//        c.add(new UpdateCommand(receiver, "3 pink fire test"));
+//        c.add(new ListCommand(receiver));
 //        c.add(new DeleteCommand(receiver, "3"));
 //        c.add(new ListCommand(receiver));
 //        c.add(new DeleteCommand(receiver, "3"));
@@ -76,58 +80,58 @@ public class Main {
 //        c.add(new ListCommand(receiver));
 //        c.add(new UndoCommand(receiver, history));
 //        c.add(new ListCommand(receiver));
-        Command[] commands = c.toArray(new Command[c.size()]);
-        invoker.setCommandsForExecution(commands);
-        invoker.executeCommand(history);
-        receiver.storeToFile();
+//        Command[] commands = c.toArray(new Command[c.size()]);
+//        invoker.setCommandsForExecution(commands);
+//        invoker.executeCommand(history);
+//        receiver.storeToFile();
 
-//        String email = "aaa@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "aaa@bbb.ccc.";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "aaa@bb.b.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "aaa@bbb.c_cc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "aaa@bb_b.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "a.a.a@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "a__aa@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = ".aaa@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "aaa.@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "_aa-a.aaa_@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "_aa--a.aaa_@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "_aa-a..aaa_@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "_aa-.a.aaa_@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "_aa-a.-aaa_@bbb.ccc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "a@b.c";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "a@b.cc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "@b.cc";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "a@bb";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "a@bb.cccc.dd";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "a@bb.cccc.DD.dd";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "a@bb.cccc.DD";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "ABC_";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
-//        email = "A.B-C_";
-//        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        String email = "aaa@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "aaa@bbb.ccc.";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "aaa@bb.b.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "aaa@bbb.c_cc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "aaa@bb_b.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "a.a.a@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "a__aa@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = ".aaa@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "aaa.@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "_aa-a.aaa_@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "_aa--a.aaa_@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "_aa-a..aaa_@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "_aa-.a.aaa_@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "_aa-a.-aaa_@bbb.ccc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "a@b.c";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "a@b.cc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "@b.cc";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "a@bb";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "a@bb.cccc.dd";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "a@bb.cccc.DD.dd";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "a@bb.cccc.DD";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "ABC_";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
+        email = "A.B-C_";
+        System.out.println(email + " - " + MasterFunction.checkIsValidEmailOrData3(email));
     }
 }
