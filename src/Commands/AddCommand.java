@@ -32,8 +32,9 @@ public class AddCommand implements Command {
 
     /**
      * Main constructor for AddCommand
+     *
      * @param receiver Receiver to be used across same command group
-     * @param data Data to be processed
+     * @param data     Data to be processed
      */
     public AddCommand(Receiver receiver, String data) {
         this.receiver = receiver;
@@ -42,6 +43,7 @@ public class AddCommand implements Command {
 
     /**
      * AddCommand support undo operation
+     *
      * @return true
      */
     @Override
@@ -51,28 +53,29 @@ public class AddCommand implements Command {
 
     /**
      * Execute the add command
+     *
      * @throws CustomException if failed validation
      */
     @Override
     public void execute() throws CustomException {
         if (receiver == null) {
-            throw new CustomException("Error! Receiver is null");
+            throw new CustomException("Error in Add Command! Receiver is null");
         }
         if (isExecuted) {
-            throw new CustomException("Error! Command has been processed before");
+            throw new CustomException("Error in Add Command! Command executed before");
         }
         if (data == null) {
-            throw new CustomException("Error! Payload cannot be empty or null");
+            throw new CustomException("Error in Add Command! Payload cannot be empty or null");
         }
         String[] splitData = data.split(" ");
         if (splitData.length != 3) {
-            throw new CustomException("Error! Invalid payload! 3 arguments required");
+            throw new CustomException("Error in Add Command! Invalid payload! 3 arguments required");
         }
         String data1 = splitData[0];
         String data2 = splitData[1];
         String data3 = splitData[2];
         if (!MasterFunction.checkIsValidEmailOrData3(data3)) {
-            throw new CustomException("Error! Invalid input! Email address is not valid");
+            throw new CustomException("Error in Add Command! Invalid input! Data3 or email is not valid");
         }
         //id to store unique ID pertaining to this add data operation
         id = receiver.add(data1, data2, data3);
@@ -82,15 +85,16 @@ public class AddCommand implements Command {
 
     /**
      * Execute the undo operation for Add command
+     *
      * @throws CustomException if failed validation
      */
     @Override
     public void undo() throws CustomException {
         if (!isExecuted) {
-            throw new CustomException("Error! Command has never been processed before!");
+            throw new CustomException("Error in Add Command! Command not executed before!");
         }
         if (doneUndo) {
-            throw new CustomException("Error! Command has already been undone!");
+            throw new CustomException("Error in Add Command! Command has already been undone!");
         }
         //delete by unique ID as opposed to index position
         receiver.deleteById(id);

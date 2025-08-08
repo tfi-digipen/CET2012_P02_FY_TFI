@@ -37,7 +37,7 @@ public class ListCommand implements Command {
     @Override
     public void execute() throws CustomException {
         if (receiver == null) {
-            throw new CustomException("Error! Receiver is null");
+            throw new CustomException("Error in List Command! Receiver is null");
         }
         System.out.println("List");
         receiver.list();
@@ -49,6 +49,6 @@ public class ListCommand implements Command {
      */
     @Override
     public void undo() throws CustomException {
-        throw new CustomException("Error! No undo for list");
+        throw new CustomException("Error in List Command! No undo for list");
     }
 }

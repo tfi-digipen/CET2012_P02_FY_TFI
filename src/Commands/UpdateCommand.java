@@ -59,25 +59,25 @@ public class UpdateCommand implements Command {
     @Override
     public void execute() throws CustomException {
         if (receiver == null) {
-            throw new CustomException("Error! Receiver is null");
+            throw new CustomException("Error in Update Command! Receiver is null");
         }
         if (isExecuted) {
-            throw new CustomException("Error! Command has been processed before");
+            throw new CustomException("Error in Update Command! Command executed before");
         }
         if (data == null) {
-            throw new CustomException("Error! Payload cannot be empty or null");
+            throw new CustomException("Error in Update Command! Payload cannot be empty or null");
         }
         String[] splitData = data.split(" ");
         if (splitData.length < 2)
-            throw new CustomException("Update command need at least 2 args");
+            throw new CustomException("Error in Update Command! Payload need at least 2 args");
         if (splitData.length > 4)
-            throw new CustomException("Update command at most 4 args");
+            throw new CustomException("Error in Update Command! Payload at most 4 args");
         String index = splitData[0];
         int dataStoredPosition = -1;
         try {
             dataStoredPosition = Integer.parseInt(index) - 1;
         } catch (NumberFormatException | NullPointerException e) {
-            throw new CustomException("Error! Invalid input! Index value not valid integer number");
+            throw new CustomException("Error in Update Command! Index value not valid integer number");
         }
         //get original data inside list before update
         originalData = receiver.getDataByIndex(dataStoredPosition);
@@ -87,7 +87,7 @@ public class UpdateCommand implements Command {
             if (splitData.length > 3) {
                 String updatedData3 = splitData[3];
                 if (!MasterFunction.checkIsValidEmailOrData3(updatedData3)) {
-                    throw new CustomException("Error! Invalid input! Email address is not valid");
+                    throw new CustomException("Error in Update Command! Invalid data3 or email input");
                 }
                 receiver.updateById(originalData.id, updatedData1, updatedData2, updatedData3);
             } else {
@@ -108,10 +108,10 @@ public class UpdateCommand implements Command {
     @Override
     public void undo() throws CustomException {
         if (!isExecuted) {
-            throw new CustomException("Error! Command has never been procesed before!");
+            throw new CustomException("Error in Update Command! Command not executed before!");
         }
         if (doneUndo) {
-            throw new CustomException("Error! Command has already been undone!");
+            throw new CustomException("Error in Update Command! Command has already been undone!");
         }
         //Update original data through unique ID
         receiver.updateById(originalData.id, originalData.data1, originalData.data2, originalData.data3);

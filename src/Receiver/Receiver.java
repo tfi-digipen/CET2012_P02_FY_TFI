@@ -24,7 +24,8 @@ public class Receiver {
 
         /**
          * Main constructor for BasicEmployeeInfo
-         * @param id unique Id of the data
+         *
+         * @param id    unique Id of the data
          * @param data1 Data1
          * @param data2 Data2
          * @param data3 Data3
@@ -105,6 +106,7 @@ public class Receiver {
 
     /**
      * Add method
+     *
      * @param data1 Data1
      * @param data2 Data2
      * @param data3 Data3
@@ -120,6 +122,7 @@ public class Receiver {
 
     /**
      * Insert method
+     *
      * @param data Employee info
      */
     public void insert(BasicEmployeeInfo data) {
@@ -142,6 +145,7 @@ public class Receiver {
 
     /**
      * Delete data inside array list by its index / position
+     *
      * @param toDeleteIndex Index to be deleted
      * @throws CustomException if index is invalid number
      */
@@ -153,6 +157,7 @@ public class Receiver {
 
     /**
      * Delete data inside array list by finding unique ID
+     *
      * @param id Unique ID to be deleted
      * @throws CustomException if unique ID not found inside list
      */
@@ -169,7 +174,8 @@ public class Receiver {
 
     /**
      * Update data by unique ID
-     * @param id Unique ID of the data
+     *
+     * @param id    Unique ID of the data
      * @param data1 Data1
      * @throws CustomException if unique ID not found inside list
      */
@@ -181,7 +187,8 @@ public class Receiver {
 
     /**
      * Update data by unique ID
-     * @param id Unique ID of the data
+     *
+     * @param id    Unique ID of the data
      * @param data1 Data1
      * @param data2 Data2
      * @throws CustomException if unique ID not found inside list
@@ -195,7 +202,8 @@ public class Receiver {
 
     /**
      * Update data by unique ID
-     * @param id Unique ID of the data
+     *
+     * @param id    Unique ID of the data
      * @param data1 Data1
      * @param data2 Data2
      * @param data3 Data3
@@ -211,6 +219,7 @@ public class Receiver {
 
     /**
      * Get index or position of the data inside list through unique ID
+     *
      * @param id Unique ID to get
      * @return Index inside list
      * @throws CustomException if unique ID not found inside list
@@ -220,11 +229,12 @@ public class Receiver {
             if (id == dataStore.get(i).id)
                 return i;
         }
-        throw new CustomException("Error! Invalid id!");
+        throw new CustomException("Error in accessing data! Invalid id!");
     }
 
     /**
      * Get employee data by index inside list
+     *
      * @param index Index
      * @return employee data
      * @throws CustomException if index is invalid number
@@ -250,11 +260,12 @@ public class Receiver {
 
     /**
      * Method to check whether index is valid input
+     *
      * @param index Index to check
      * @throws CustomException if input is not valid
      */
     public void checkIsValidIndex(int index) throws CustomException {
         if (index < 0 || index >= dataStore.size())
-            throw new CustomException("Error! Invalid index!");
+            throw new CustomException("Error in accessing data! Invalid index!");
     }
 }

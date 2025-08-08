@@ -53,7 +53,7 @@ public class UndoCommand implements Command {
     public void execute() throws CustomException {
         //Throw CustomException if history is null or empty
         if (history == null || history.isEmpty()) {
-            throw new CustomException("Error! History stack cannot be empty or null");
+            throw new CustomException("Error in Undo Command! History stack cannot be empty or null");
         }
         //Pop previously executed command inside history stack and run undo
         history.pop().undo();
@@ -66,6 +66,6 @@ public class UndoCommand implements Command {
      */
     @Override
     public void undo() throws CustomException {
-        throw new CustomException("Error! Undo cannot be applied to undo");
+        throw new CustomException("Error in Undo Command! Undo cannot be applied to undo");
     }
 }

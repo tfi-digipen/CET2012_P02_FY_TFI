@@ -58,19 +58,19 @@ public class DeleteCommand implements Command {
     @Override
     public void execute() throws CustomException {
         if (receiver == null) {
-            throw new CustomException("Error! Receiver is null");
+            throw new CustomException("Error in Delete Command! Receiver is null");
         }
         if (isExecuted) {
-            throw new CustomException("Error! Command has been processed before");
+            throw new CustomException("Error in Delete Command! Command executed before");
         }
         if (index == null) {
-            throw new CustomException("Error! Payload cannot be empty or null");
+            throw new CustomException("Error in Delete Command! Payload cannot be empty or null");
         }
         int dataStoredPosition = -1;
         try {
             dataStoredPosition = Integer.parseInt(index.trim()) - 1;
         } catch (Exception e) {
-            throw new CustomException("Error! Invalid input! Index value not valid integer number");
+            throw new CustomException("Error in Delete Command! Index value not valid integer number");
         }
         //get original data inside list before deletion
         originalData = receiver.getDataByIndex(dataStoredPosition);
@@ -88,10 +88,10 @@ public class DeleteCommand implements Command {
     @Override
     public void undo() throws CustomException {
         if (!isExecuted) {
-            throw new CustomException("Error! Command has never been processed before!");
+            throw new CustomException("Error in Delete Command! Command not executed before!");
         }
         if (doneUndo) {
-            throw new CustomException("Error! Command has already been undone!");
+            throw new CustomException("Error in Delete Command! Command has already been undone!");
         }
         //undo data by inserting original data to its list, compare ID to determine insertion position
         receiver.insert(originalData);
