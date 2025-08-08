@@ -1,12 +1,22 @@
+package MainDriver;
+
 import Commands.*;
 import Invoker.Invoker;
-import MasterFunction.MasterFunction;
 import Receiver.Receiver;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * Main class driver
+ */
 public class Main {
+    private Main(){}
+
+    /**
+     * Main point on start of application
+     * @param args Additional args for the application, not required at the moment
+     */
     public static void main(String[] args) {
         Stack<Command> history = new Stack<>();
         Receiver receiver = new Receiver();
@@ -17,10 +27,10 @@ public class Main {
         c.add(new UndoCommand(null, history));
         c.add(new UndoCommand(receiver, history));
         c.add(new DeleteCommand(null, "1"));
+        c.add(new ListCommand(receiver));
         c.add(new DeleteCommand(receiver, "-1"));
         c.add(new DeleteCommand(receiver, "a"));
         c.add(new DeleteCommand(receiver, "1"));
-        c.add(new ListCommand(receiver));
         c.add(new AddCommand(receiver, "first_name last_name email"));
         c.add(new AddCommand(receiver, "john doe simple@example.com"));
         c.add(new AddCommand(receiver, "hanna moon tetter.tots@potatoesarelife.com"));
