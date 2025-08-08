@@ -72,7 +72,7 @@ public class DeleteCommand implements Command {
         }
         int dataStoredPosition = -1;
         try {
-            dataStoredPosition = Integer.parseInt(index.trim()) - 1;
+            dataStoredPosition = Integer.parseInt(index) - 1;
         } catch (Exception e) {
             throw new CustomException("Error in Delete Command! Index value not valid integer number");
         }
