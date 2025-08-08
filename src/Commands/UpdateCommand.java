@@ -26,14 +26,15 @@ public class UpdateCommand implements Command {
      */
     private final String data;
     /**
-     * Original data before update
+     * Original data
      */
     private Receiver.BasicEmployeeInfo originalData;
 
     /**
      * Main constructor for UpdateCommand
+     *
      * @param receiver Receiver to be used across same command group
-     * @param data Data to be processed
+     * @param data     Data to be processed
      */
     public UpdateCommand(Receiver receiver, String data) {
         this.receiver = receiver;
@@ -42,6 +43,7 @@ public class UpdateCommand implements Command {
 
     /**
      * UpdateCommand support undo operation
+     *
      * @return true
      */
     @Override
@@ -51,6 +53,7 @@ public class UpdateCommand implements Command {
 
     /**
      * Execute the update command
+     *
      * @throws CustomException if failed validation
      */
     @Override
@@ -78,20 +81,20 @@ public class UpdateCommand implements Command {
         }
         //get original data inside list before update
         originalData = receiver.getDataByIndex(dataStoredPosition);
-        String data1 = splitData[1];
+        String updatedData1 = splitData[1];
         if (splitData.length > 2) {
-            String data2 = splitData[2];
+            String updatedData2 = splitData[2];
             if (splitData.length > 3) {
-                String data3 = splitData[3];
-                if (!MasterFunction.checkIsValidEmailOrData3(data3)) {
+                String updatedData3 = splitData[3];
+                if (!MasterFunction.checkIsValidEmailOrData3(updatedData3)) {
                     throw new CustomException("Error! Invalid input! Email address is not valid");
                 }
-                receiver.updateById(originalData.id, data1, data2, data3);
+                receiver.updateById(originalData.id, updatedData1, updatedData2, updatedData3);
             } else {
-                receiver.updateById(originalData.id, data1, data2);
+                receiver.updateById(originalData.id, updatedData1, updatedData2);
             }
         } else {
-            receiver.updateById(originalData.id, data1);
+            receiver.updateById(originalData.id, updatedData1);
         }
         isExecuted = true;
         System.out.println("Update # " + data);
@@ -99,6 +102,7 @@ public class UpdateCommand implements Command {
 
     /**
      * Execute the undo operation for Update command
+     *
      * @throws CustomException if failed validation
      */
     @Override

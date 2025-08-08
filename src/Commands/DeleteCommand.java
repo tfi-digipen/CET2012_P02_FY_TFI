@@ -31,8 +31,9 @@ public class DeleteCommand implements Command {
 
     /**
      * Main constructor for DeleteCommand
+     *
      * @param receiver Receiver to be used across same command group
-     * @param index Index to delete the data
+     * @param index    Index to delete the data
      */
     public DeleteCommand(Receiver receiver, String index) {
         this.receiver = receiver;
@@ -41,6 +42,7 @@ public class DeleteCommand implements Command {
 
     /**
      * DeleteCommand support undo operation
+     *
      * @return true
      */
     @Override
@@ -50,6 +52,7 @@ public class DeleteCommand implements Command {
 
     /**
      * Execute the delete command
+     *
      * @throws CustomException if failed validation
      */
     @Override
@@ -65,7 +68,7 @@ public class DeleteCommand implements Command {
         }
         int dataStoredPosition = -1;
         try {
-            dataStoredPosition = Integer.parseInt(index) - 1;
+            dataStoredPosition = Integer.parseInt(index.trim()) - 1;
         } catch (Exception e) {
             throw new CustomException("Error! Invalid input! Index value not valid integer number");
         }
@@ -79,6 +82,7 @@ public class DeleteCommand implements Command {
 
     /**
      * Execute the undo operation for the Delete command
+     *
      * @throws CustomException if failed validation
      */
     @Override

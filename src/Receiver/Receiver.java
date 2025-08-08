@@ -13,6 +13,8 @@ import java.util.List;
 public class Receiver {
     /**
      * BasicEmployeeInfo class to store unique ID and data1, data2, data3
+     * Using unique ID for storage location, it can prevent unauthorised
+     * modification of history stack causing issue with the data integrity
      */
     public class BasicEmployeeInfo {
         public int id;
@@ -32,6 +34,13 @@ public class Receiver {
             this.data1 = data1;
             this.data2 = data2;
             this.data3 = data3;
+        }
+
+        public BasicEmployeeInfo(BasicEmployeeInfo basicEmployeeInfo) {
+            this.id = basicEmployeeInfo.id;
+            this.data1 = basicEmployeeInfo.data1;
+            this.data2 = basicEmployeeInfo.data2;
+            this.data3 = basicEmployeeInfo.data3;
         }
 
         /**
@@ -111,7 +120,7 @@ public class Receiver {
 
     /**
      * Insert method
-     * @param data Data of the employee with unique ID
+     * @param data Employee info
      */
     public void insert(BasicEmployeeInfo data) {
         //if storage is empty, just add it directly
@@ -208,8 +217,7 @@ public class Receiver {
      */
     public int getIndex(int id) throws CustomException {
         for (int i = 0; i < dataStore.size(); i++) {
-            int dataID = dataStore.get(i).id;
-            if (dataID == id)
+            if (id == dataStore.get(i).id)
                 return i;
         }
         throw new CustomException("Error! Invalid id!");
@@ -223,7 +231,7 @@ public class Receiver {
      */
     public BasicEmployeeInfo getDataByIndex(int index) throws CustomException {
         checkIsValidIndex(index);
-        return dataStore.get(index);
+        return new BasicEmployeeInfo(dataStore.get(index));
     }
 
     /**
