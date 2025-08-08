@@ -137,7 +137,7 @@ public class Receiver {
             }
         }
         //insert to first position if current data unique ID is the smallest
-        dataStore.addFirst(data);
+        dataStore.add(0, data);
     }
 
     /**
