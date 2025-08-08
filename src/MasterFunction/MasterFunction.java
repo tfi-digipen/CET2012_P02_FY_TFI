@@ -1,5 +1,8 @@
 package MasterFunction;
 
+import com.sun.jndi.toolkit.url.Uri;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,21 +18,23 @@ import java.util.regex.Pattern;
 public class MasterFunction {
     /**
      * Check if file exist method
+     *
      * @param fileName Complete path + filename
      * @return true if file exist
      */
     public static boolean checkIfFileExist(String fileName) {
-        return Files.exists(Path.of(fileName));
+        return Files.exists(new File(fileName).toPath());
     }
 
     /**
      * Get contents of the file
+     *
      * @param fileName Complete path + filename
      * @return content of the files by lines
      */
     public static List<String> getFileContent(String fileName) {
         try {
-            return Files.readAllLines(Path.of(fileName));
+            return Files.readAllLines(new File(fileName).toPath());
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -38,12 +43,13 @@ public class MasterFunction {
 
     /**
      * Write content to file
-     * @param fileName Complete path + filename
+     *
+     * @param fileName    Complete path + filename
      * @param fileContent Content to write
      */
     public static void writeToFile(String fileName, String fileContent) {
         try {
-            Files.writeString(Path.of(fileName), fileContent, StandardCharsets.US_ASCII, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.write(new File(fileName).toPath(), fileContent.getBytes(StandardCharsets.US_ASCII), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -51,6 +57,7 @@ public class MasterFunction {
 
     /**
      * Method to convert first character to Uppercase and the rest to Lowercase
+     *
      * @param input Input to be converted
      * @return Converted input
      */
@@ -60,6 +67,7 @@ public class MasterFunction {
 
     /**
      * Method to check whether data3 is valid email or valid data3
+     *
      * @param input Input to check
      * @return true if input valid
      */

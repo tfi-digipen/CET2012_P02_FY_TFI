@@ -18,6 +18,11 @@ public class Invoker {
     private Command[] cmdToExecute;
 
     /**
+     * Main constructor for Invoker
+     */
+    public Invoker() {}
+
+    /**
      * Store commands from user input to storage location
      *
      * @param commands

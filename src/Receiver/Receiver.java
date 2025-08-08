@@ -60,7 +60,7 @@ public class Receiver {
     /**
      * Path + filename for data storage
      */
-    private String originalFileName = "./dataStore.txt";
+    private String originalFileName = "./src/dataStore.txt";
     /**
      * Running counter for unique ID
      */
