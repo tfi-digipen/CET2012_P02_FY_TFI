@@ -77,5 +77,6 @@ public class MasterFunction {
      * Prepared regex pattern and compile once
      * To save the resource required to compile pattern everytime method run
      */
-    private static final Pattern p = Pattern.compile("^([\\w]+(([.-]?[\\w])?)+?@[a-zA-Z\\d]+(([.-]?[a-zA-Z\\d])?)+?(\\.[a-z]{2,3})+|\\w+)$");
+    private static final Pattern p = Pattern.compile("^[\\w]+(([.-][\\w]+)*" +
+            "@[a-zA-Z0-9]+([.-][a-zA-Z0-9]+)*(\\.[a-z]{2,3})){0,1}$");
 }
